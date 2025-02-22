@@ -62,13 +62,13 @@ export default async function DashboardLayout({
         </SidebarContent>
         <SidebarFooter>退出登录</SidebarFooter>
       </Sidebar>
-      <main className="p-4">
+      <main className="px-4 py-6">
         <div className="flex h-5 items-center space-x-4">
           <SidebarTrigger />
           <Separator orientation="vertical" />
           <NavTitle />
         </div>
-        <div className="my-4">{children}</div>
+        <div className="my-8">{children}</div>
       </main>
     </SidebarProvider>
   );
