@@ -1,5 +1,22 @@
 // import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@components/ui/sidebar";
+import { Separator } from "@components/ui/separator";
+import { NavTitle } from "./NavTitle";
+import { items } from "./config";
 
 export default async function DashboardLayout({
   children,
@@ -21,23 +38,38 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen flex">
-      <nav className="w-64 bg-gray-800 text-white p-4">
-        <h2 className="text-xl mb-4">仪表板</h2>
-        <ul>
-          <li className="mb-2">
-            <a href="/dashboard" className="hover:text-gray-300">
-              查看信息
-            </a>
-          </li>
-          <li className="mb-2">
-            <a href="/dashboard/edit" className="hover:text-gray-300">
-              修改信息
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <main className="flex-1 p-8">{children}</main>
-    </div>
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>后台管理系统</SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>操作</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter>退出登录</SidebarFooter>
+      </Sidebar>
+      <main className="p-4">
+        <div className="flex h-5 items-center space-x-4">
+          <SidebarTrigger />
+          <Separator orientation="vertical" />
+          <NavTitle />
+        </div>
+        <div className="my-4">{children}</div>
+      </main>
+    </SidebarProvider>
   );
 }

@@ -19,7 +19,7 @@ const LoginFormSchema = z.object({
 });
 
 export async function login(
-  prevState: LoginFormState,
+  _: LoginFormState,
   formData: FormData
 ): Promise<LoginFormState> {
   const validatedFields = LoginFormSchema.safeParse({
