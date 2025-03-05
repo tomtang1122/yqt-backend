@@ -1,5 +1,3 @@
-// import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import {
   SidebarProvider,
   SidebarTrigger,
@@ -23,20 +21,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const token = cookies().get('auth-token')
-  const token = "123";
-  if (!token) {
-    redirect("/login");
-  }
-
-  // 验证 token 有效性
-  try {
-    // await getUserInfo(token.value);
-  } catch {
-    // cookies().delete("auth-token");
-    redirect("/login");
-  }
-
   return (
     <SidebarProvider>
       <Sidebar>

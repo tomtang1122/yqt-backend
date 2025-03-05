@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { loginApi, type LoginResponse } from "@api/server";
+import { loginApi } from "@api/server";
 import { z } from "zod";
 
 export type LoginFormState = {
@@ -10,7 +10,6 @@ export type LoginFormState = {
     username?: string[];
     password?: string[];
   };
-  data?: LoginResponse;
 };
 
 const LoginFormSchema = z.object({
@@ -39,7 +38,7 @@ export async function login(
   try {
     const data = await loginApi({ username, password });
 
-    if (data.success && data?.adminToken) {
+    if (data?.adminToken) {
       const cookieStore = await cookies();
       cookieStore.set("auth-token", data.adminToken, {
         httpOnly: true,
@@ -47,12 +46,11 @@ export async function login(
         sameSite: "strict",
         maxAge: 60 * 60 * 24, // 24小时
       });
-      return { data };
-      //   redirect("/dashboard");
+      redirect("/dashboard");
     }
-    return { data: { success: true } };
-  } catch {
-    return { data: { success: true } };
+    throw new Error("登录失败");
+  } catch (error) {
+    throw error instanceof Error ? error : new Error("登录失败");
   }
 }
 
