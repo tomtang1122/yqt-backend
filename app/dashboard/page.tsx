@@ -1,33 +1,37 @@
 import { Suspense } from "react";
 
-async function fetchDashboardData() {
-  // 模拟 API 调用，等待 4 秒
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-  return {
-    title: "仪表板",
-    data: "这是从服务器加载的数据",
-  };
+async function fetchDashboardData(time: number) {
+  await new Promise((resolve) => setTimeout(resolve, time));
 }
 
-// 将异步内容抽取为单独的组件
-async function DashboardContent() {
-  const data = await fetchDashboardData();
+async function UserDashboardContent() {
+  await fetchDashboardData(2500);
 
   return (
     <div className="border rounded-lg p-4 shadow-sm">
-      <h2 className="text-xl font-bold mb-4">{data.title}</h2>
-      <p>{data.data}</p>
+      <h2 className="text-xl font-bold mb-4">用户</h2>
+      <p>用户的一些基本信息</p>
     </div>
   );
 }
 
-// 局部 loading 组件
-function LoadingContent() {
+async function EnterpriseDashboardContent() {
+  await fetchDashboardData(4000);
+
+  return (
+    <div className="border rounded-lg p-4 shadow-sm">
+      <h2 className="text-xl font-bold mb-4">企业</h2>
+      <p>企业的一些基本信息</p>
+    </div>
+  );
+}
+
+function LoadingContent(props: { loadingMessage: string }) {
   return (
     <div className="border rounded-lg p-4 shadow-sm">
       <div className="flex items-center space-x-4">
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
-        <p>加载数据中...</p>
+        <p>{props.loadingMessage}</p>
       </div>
     </div>
   );
@@ -35,17 +39,12 @@ function LoadingContent() {
 
 export default function DashboardMainPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-6">仪表板页面</h1>
-
-      {/* 这部分内容会立即显示 */}
-      <div className="mb-6">
-        <p>这是一些静态内容，会立即显示</p>
-      </div>
-
-      {/* 异步加载的内容区域 */}
-      <Suspense fallback={<LoadingContent />}>
-        <DashboardContent />
+    <div className="p-4 flex gap-8">
+      <Suspense fallback={<LoadingContent loadingMessage="加载个人信息..." />}>
+        <UserDashboardContent />
+      </Suspense>
+      <Suspense fallback={<LoadingContent loadingMessage="加载企业信息..." />}>
+        <EnterpriseDashboardContent />
       </Suspense>
     </div>
   );

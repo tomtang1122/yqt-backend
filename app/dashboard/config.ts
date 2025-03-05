@@ -7,8 +7,8 @@ export const items = [
     icon: Icons.LayoutDashboard,
   },
   {
-    title: "管理网站",
+    title: "企业列表",
     url: "/dashboard/manage",
     icon: Icons.Monitor,
   },
-]; 
+];

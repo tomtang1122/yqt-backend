@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { login } from "@actions/auth";
+import { loginAction } from "@actions/auth";
 import { Button } from "@components/ui/button";
 import { useForm } from "react-hook-form";
 import {
@@ -15,8 +15,8 @@ import {
 import { Input } from "@components/ui/input";
 import { md5 } from "js-md5";
 
-export default function LoginForm() {
-  const [state, formAction] = useActionState(login, {});
+export const LoginForm = () => {
+  const [state, formAction] = useActionState(loginAction, {});
 
   const form = useForm({
     defaultValues: {
@@ -82,4 +82,4 @@ export default function LoginForm() {
       </Form>
     </div>
   );
-}
+};

@@ -17,7 +17,7 @@ const LoginFormSchema = z.object({
   password: z.string().min(1, { message: "密码至少需要1个字符" }),
 });
 
-export async function login(
+export async function loginAction(
   _: LoginFormState,
   formData: FormData
 ): Promise<LoginFormState> {
@@ -54,7 +54,7 @@ export async function login(
   }
 }
 
-export async function logout() {
+export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("auth-token");
   redirect("/login");

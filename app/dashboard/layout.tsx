@@ -24,10 +24,10 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader>后台管理系统</SidebarHeader>
+        <SidebarHeader>云雀台后台管理系统</SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>操作</SidebarGroupLabel>
+            <SidebarGroupLabel>管理</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (

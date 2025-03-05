@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import { items } from "./config";
 
-export function NavTitle() {
+export const NavTitle = () => {
   const pathname = usePathname();
   const currentItem = items.find((item) => item.url === pathname);
   return (
@@ -10,4 +10,4 @@ export function NavTitle() {
       {currentItem?.title || "信息面板"}
     </p>
   );
-}
+};
