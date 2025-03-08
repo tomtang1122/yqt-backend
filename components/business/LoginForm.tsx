@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { loginAction } from "@actions/auth";
+import { loginAction } from "@lib/action";
 import { Button } from "@components/ui/button";
 import { useForm } from "react-hook-form";
 import {
@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
-import { md5 } from "js-md5";
 
 export const LoginForm = () => {
   const [state, formAction] = useActionState(loginAction, {});
@@ -25,14 +24,6 @@ export const LoginForm = () => {
     },
   });
 
-  const handleSubmit = (formData: FormData) => {
-    const rawPassword = formData.get("password");
-    if (rawPassword) {
-      formData.set("password", md5(rawPassword as string));
-    }
-    formAction(formData);
-  };
-
   return (
     <div className="rounded-xl border bg-card text-card-foreground shadow p-6">
       <div className="mb-6 text-center">
@@ -42,7 +33,7 @@ export const LoginForm = () => {
         </div>
       </div>
       <Form {...form}>
-        <form action={handleSubmit} className="w-[320px] flex flex-col gap-6">
+        <form action={formAction} className="w-[320px] flex flex-col gap-6">
           <FormField
             control={form.control}
             name="username"

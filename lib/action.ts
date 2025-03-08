@@ -2,10 +2,23 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { loginApi } from "@api/server";
 import { z } from "zod";
+import { request, LOGIN_REQUEST_URL } from "./request";
+import { Response } from "@type/common";
+import { md5 } from "js-md5";
 
-export type LoginFormState = {
+type LoginResponse = Response<{
+  adminAccount?: string;
+  adminToken?: string;
+  nickname?: string;
+  faceURL?: string;
+  level?: number;
+  adminUserID?: string;
+  imUserID?: string;
+  imToken?: string;
+}>;
+
+type LoginFormState = {
   error?: {
     username?: string[];
     password?: string[];
@@ -36,16 +49,24 @@ export async function loginAction(
   // validate success
   const { username, password } = validatedFields.data;
   try {
-    const data = await loginApi({ username, password });
+    const { data: { data } = {} } = await request.post<LoginResponse>(
+      LOGIN_REQUEST_URL,
+      {
+        account: username,
+        password: md5(password),
+      }
+    );
 
-    if (data?.adminToken) {
+    if (data?.adminToken && data?.imToken) {
       const cookieStore = await cookies();
-      cookieStore.set("auth-token", data.adminToken, {
+      const defaultOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "strict" as const,
         maxAge: 60 * 60 * 24, // 24小时
-      });
+      };
+      cookieStore.set("admin-token", data.adminToken, defaultOptions);
+      cookieStore.set("im-token", data.imToken, defaultOptions);
       redirect("/dashboard");
     }
     throw new Error("登录失败");
@@ -56,6 +77,7 @@ export async function loginAction(
 
 export async function logoutAction() {
   const cookieStore = await cookies();
-  cookieStore.delete("auth-token");
+  cookieStore.delete("admin-token");
+  cookieStore.delete("im-token");
   redirect("/login");
 }

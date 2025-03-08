@@ -2,6 +2,7 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export const LOGIN_REQUEST_URL = "/account/login";
+export const GET_ENTERPRISE_REQUEST_URL = "/enterprise/get";
 
 // 创建axios实例
 export const request = axios.create({
@@ -21,7 +22,7 @@ request.interceptors.request.use(async (config) => {
   }
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("auth-token");
+    const token = cookieStore.get("admin-token");
 
     if (token) {
       config.headers["token"] = token.value;

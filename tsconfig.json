@@ -20,11 +20,12 @@
     ],
     "paths": {
       "@app/*": ["./app/*"],
-      "@actions/*": ["./app/actions/*"],
-      "@api/*": ["./app/api/*"],
+      "@actions/*": ["lib/actions/*"],
+      "@api/*": ["lib/api/*"],
       "@components/*": ["./components/*"],
       "@lib/*": ["./lib/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@type/*": ["./type/*"]
     },
     "baseUrl": "."
   },

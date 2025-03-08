@@ -8,7 +8,12 @@ export const items = [
   },
   {
     title: "企业列表",
-    url: "/dashboard/manage",
+    url: "/dashboard/enterprise",
     icon: Icons.Monitor,
+  },
+  {
+    title: "企业创建",
+    url: "/dashboard/enterprise/create",
+    icon: Icons.SquarePlus,
   },
 ];
