@@ -14,7 +14,7 @@ export default async function EnterpriseEditPage(props: {
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4">
       <h1 className="text-2xl font-bold">更新企业信息</h1>
       <EnterpriseForm
         action={updateEnterpriseAction.bind(null, id)}

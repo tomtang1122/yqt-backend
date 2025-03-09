@@ -10,12 +10,18 @@ type EnterpriseResponse = {
   enterprises?: Enterprise[];
 };
 
-export async function fetchEnterprise(): Promise<EnterpriseResponse> {
+export const MAX_ENTERPRISE_PER_PAGE = 10;
+
+export async function fetchEnterprise(
+  pageNumber: number,
+  query?: string
+): Promise<EnterpriseResponse> {
   try {
     const { data: { data } = {} } = await request.post<
       Response<EnterpriseResponse>
     >(QUERY_ENTERPRISE_REQUEST_URL, {
-      pagination: { pageNumber: 1, showNumber: 100 },
+      pagination: { pageNumber, showNumber: MAX_ENTERPRISE_PER_PAGE },
+      nameKeyword: query,
     });
     return data || { total: 0, enterprises: [] };
   } catch (error) {

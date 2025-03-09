@@ -32,7 +32,7 @@ export const EnterpriseForm = (props: {
       address: "",
       phoneNumber: "",
       email: "",
-      isEligibleForCashback: true,
+      isEligibleForCashback: false,
     },
   });
 

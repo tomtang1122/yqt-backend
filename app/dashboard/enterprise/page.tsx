@@ -4,12 +4,22 @@ import { Skeleton } from "@components/ui/skeleton";
 import { Button } from "@components/ui/button";
 import { Icons } from "@components/ui/icon";
 import Link from "next/link";
+import { SearchEnterprise } from "@components/business/SearchEnterprise";
+export default async function EnterpriseManagePage(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query;
+  const currentPage = Number(searchParams?.page) || 1;
 
-export default function EnterpriseManagePage() {
   return (
-    <div className="p-4 space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">企业列表</h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold">企业列表</h1>
+      <div className="flex items-center justify-between my-6 gap-4">
+        <SearchEnterprise />
         <Button asChild>
           <Link href="/dashboard/enterprise/create">
             <Icons.Plus />
@@ -21,16 +31,13 @@ export default function EnterpriseManagePage() {
       <Suspense
         fallback={
           <div className="flex flex-col gap-4">
-            <Skeleton className="w-full h-10 bg-gray-100" />
-            <Skeleton className="w-full h-10 bg-gray-100" />
-            <Skeleton className="w-full h-10 bg-gray-100" />
-            <Skeleton className="w-full h-10 bg-gray-100" />
-            <Skeleton className="w-full h-10 bg-gray-100" />
-            <Skeleton className="w-full h-10 bg-gray-100" />
+            {Array.from({ length: 11 }).map((_, index) => (
+              <Skeleton className="w-full h-10 bg-gray-100" key={index} />
+            ))}
           </div>
         }
       >
-        <EnterpriseList />
+        <EnterpriseList currentPage={currentPage} query={query} />
       </Suspense>
     </div>
   );

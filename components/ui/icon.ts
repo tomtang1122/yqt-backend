@@ -7,6 +7,7 @@ import {
   Trash,
   Plus,
   ChevronRight,
+  Search,
 } from "lucide-react";
 
 export const Icons = {
@@ -18,4 +19,5 @@ export const Icons = {
   Trash,
   Plus,
   ChevronRight,
+  Search,
 };
