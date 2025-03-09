@@ -2,9 +2,16 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { request, LOGIN_REQUEST_URL } from "./request";
-import { Response } from "@type/common";
+import {
+  request,
+  LOGIN_REQUEST_URL,
+  ADD_ENTERPRISE_REQUEST_URL,
+  DELETE_ENTERPRISE_REQUEST_URL,
+  UPDATE_ENTERPRISE_REQUEST_URL,
+} from "./request";
+import { Response, EnterpriseParams } from "@type/common";
 import { md5 } from "js-md5";
 
 type LoginResponse = Response<{
@@ -80,4 +87,94 @@ export async function logoutAction() {
   cookieStore.delete("admin-token");
   cookieStore.delete("im-token");
   redirect("/login");
+}
+
+export type EnterpriseFormState = {
+  error?: {
+    logo?: string[];
+    name?: string[];
+    website?: string[];
+    address?: string[];
+    phoneNumber?: string[];
+    email?: string[];
+  };
+};
+
+const enterpriseFormSchema = z.object({
+  logo: z.string().min(1, { message: "请上传企业logo" }),
+  name: z.string().min(1, { message: "企业名称不能为空" }),
+  website: z.string().url({ message: "请输入有效的网址" }),
+  address: z.string().min(1, { message: "企业地址不能为空" }),
+  phoneNumber: z
+    .string()
+    .regex(
+      /^((\+86)|(86))?(1[3-9]\d{9}|0\d{2,3}-?[1-9]\d{6,7})$/,
+      "请输入有效的电话号码"
+    ),
+  email: z.string().email({ message: "请输入有效的邮箱地址" }),
+  isEligibleForCashback: z.boolean().default(false).optional(),
+});
+
+export async function createEnterpriseAction(
+  formData: Omit<EnterpriseParams, "tags">
+): Promise<EnterpriseFormState | undefined> {
+  const validatedFields = enterpriseFormSchema.safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const formDataToSend = validatedFields.data;
+  try {
+    await request.post<Response<EnterpriseParams>>(
+      ADD_ENTERPRISE_REQUEST_URL,
+      formDataToSend
+    );
+
+    revalidatePath("/dashboard/enterprise");
+    redirect("/dashboard/enterprise");
+  } catch (error) {
+    throw error instanceof Error ? error : new Error("创建企业失败");
+  }
+}
+
+export async function updateEnterpriseAction(
+  enterpriseID: string,
+  formData: Omit<EnterpriseParams, "tags">
+): Promise<EnterpriseFormState | undefined> {
+  const validatedFields = enterpriseFormSchema.safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const formDataToSend = validatedFields.data;
+  try {
+    await request.post<Response<EnterpriseParams>>(
+      UPDATE_ENTERPRISE_REQUEST_URL,
+      { enterpriseID, ...formDataToSend }
+    );
+
+    revalidatePath("/dashboard/enterprise");
+    redirect("/dashboard/enterprise");
+  } catch (error) {
+    throw error instanceof Error ? error : new Error("更新企业失败");
+  }
+}
+
+export async function deleteEnterpriseAction(enterpriseID?: string) {
+  if (!enterpriseID) return;
+  try {
+    await request.post<Response<EnterpriseParams>>(
+      DELETE_ENTERPRISE_REQUEST_URL,
+      { enterpriseID }
+    );
+    revalidatePath("/dashboard/enterprise");
+  } catch (error) {
+    throw error instanceof Error ? error : new Error("删除企业失败");
+  }
 }

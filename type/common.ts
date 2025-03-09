@@ -5,7 +5,7 @@ export interface Response<T> {
   data?: T;
 }
 
-export interface CreateEnterpriseParams {
+export interface EnterpriseParams {
   logo?: string;
   name?: string;
   tags?: string[];
@@ -14,4 +14,9 @@ export interface CreateEnterpriseParams {
   phoneNumber?: string;
   email?: string;
   isEligibleForCashback?: boolean;
+}
+
+export interface Enterprise extends EnterpriseParams {
+  createTime?: number;
+  enterpriseID?: string;
 }

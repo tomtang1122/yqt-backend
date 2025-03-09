@@ -9,12 +9,12 @@ export default function EnterpriseManagePage() {
       <Suspense
         fallback={
           <div className="flex flex-col gap-4">
-            <Skeleton className="w-full h-10" />
-            <Skeleton className="w-full h-10" />
-            <Skeleton className="w-full h-10" />
-            <Skeleton className="w-full h-10" />
-            <Skeleton className="w-full h-10" />
-            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
+            <Skeleton className="w-full h-10 bg-gray-100" />
           </div>
         }
       >

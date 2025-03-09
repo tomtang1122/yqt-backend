@@ -2,7 +2,11 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export const LOGIN_REQUEST_URL = "/account/login";
+export const QUERY_ENTERPRISE_REQUEST_URL = "/enterprise/query";
 export const GET_ENTERPRISE_REQUEST_URL = "/enterprise/get";
+export const ADD_ENTERPRISE_REQUEST_URL = "/enterprise/add";
+export const DELETE_ENTERPRISE_REQUEST_URL = "/enterprise/delete";
+export const UPDATE_ENTERPRISE_REQUEST_URL = "/enterprise/update";
 
 // 创建axios实例
 export const request = axios.create({

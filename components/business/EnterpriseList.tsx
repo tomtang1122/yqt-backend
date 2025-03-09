@@ -1,4 +1,5 @@
 import { fetchEnterprise } from "@lib/fetchData";
+import { deleteEnterpriseAction } from "@lib/action";
 import {
   Table,
   TableBody,
@@ -31,13 +32,22 @@ export async function EnterpriseList() {
             <TableCell className="text-right">
               <div className="flex items-center gap-2 justify-end">
                 <Button variant="ghost" size="icon">
-                  <Link href={`/dashboard/enterprise/create`}>
+                  <Link
+                    href={`/dashboard/enterprise/${enterprise.enterpriseID}/edit`}
+                  >
                     <Icons.Pencil className="w-4 h-4" />
                   </Link>
                 </Button>
-                <Button variant="ghost" size="icon">
-                  <Icons.Trash className="w-4 h-4" />
-                </Button>
+                <form
+                  action={deleteEnterpriseAction.bind(
+                    null,
+                    enterprise.enterpriseID
+                  )}
+                >
+                  <Button type="submit" variant="ghost" size="icon">
+                    <Icons.Trash className="w-4 h-4" />
+                  </Button>
+                </form>
               </div>
             </TableCell>
           </TableRow>
