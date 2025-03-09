@@ -5,7 +5,8 @@ import {
   LayoutDashboard,
   Pencil,
   Trash,
-  SquarePlus,
+  Plus,
+  ChevronRight,
 } from "lucide-react";
 
 export const Icons = {
@@ -15,5 +16,6 @@ export const Icons = {
   LayoutDashboard,
   Pencil,
   Trash,
-  SquarePlus
+  Plus,
+  ChevronRight,
 };

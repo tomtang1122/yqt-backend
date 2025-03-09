@@ -52,113 +52,111 @@ export const EnterpriseForm = (props: {
   });
 
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={onSubmit} className="max-w-[840px]">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业名称：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请输入企业名称" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业网址：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请输入企业网址" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业地址：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请输入企业地址" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业邮箱：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请输入企业邮箱" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业电话：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请输入企业电话" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="logo"
-            render={({ field }) => (
-              <FormItem className="mb-3">
-                <FormLabel className="!text-inherit">企业logo：</FormLabel>
-                <FormControl>
-                  <Input placeholder="请上传企业logo" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="isEligibleForCashback"
-            render={({ field }) => (
-              <FormItem className="mb-8">
-                <FormLabel className="!text-inherit">是否支持返现：</FormLabel>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <form onSubmit={onSubmit} className="max-w-[840px]">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业名称：</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入企业名称" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业网址：</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入企业网址" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业地址：</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入企业地址" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业邮箱：</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入企业邮箱" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业电话：</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入企业电话" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业logo：</FormLabel>
+              <FormControl>
+                <Input placeholder="请上传企业logo" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="isEligibleForCashback"
+          render={({ field }) => (
+            <FormItem className="mb-8">
+              <FormLabel className="!text-inherit">是否支持返现：</FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-          <div className="flex justify-end gap-4">
-            <Button asChild type="button" variant="outline">
-              <Link href="/dashboard/enterprise">返回</Link>
-            </Button>
-            <Button type="submit" variant="default">
-              {isEdit ? "更新" : "创建"}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+        <div className="flex justify-end gap-4">
+          <Button asChild type="button" variant="outline">
+            <Link href="/dashboard/enterprise">返回</Link>
+          </Button>
+          <Button type="submit" variant="default">
+            {isEdit ? "更新" : "创建"}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
