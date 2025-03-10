@@ -40,10 +40,10 @@ request.interceptors.request.use(async (config) => {
 // 响应拦截器
 request.interceptors.response.use(
   (response) => {
-    // todo: 如果token过期或者验证失败，就导航到login
     return response;
   },
-  () => {
-    return Promise.reject(new Error("网络错误，请检查您的网络连接"));
+  (error) => {
+    const message = "网络错误，请检查您的网络连接";
+    return Promise.reject(new Error(`${error.response.status}: ${message}`));
   }
 );
