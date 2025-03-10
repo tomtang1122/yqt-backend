@@ -8,6 +8,7 @@ import {
   Plus,
   ChevronRight,
   Search,
+  Power,
 } from "lucide-react";
 
 export const Icons = {
@@ -20,4 +21,5 @@ export const Icons = {
   Plus,
   ChevronRight,
   Search,
+  Power,
 };

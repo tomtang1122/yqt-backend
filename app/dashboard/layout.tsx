@@ -18,7 +18,7 @@ import { items } from "@lib/config";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@assets/logo.png";
-
+import { Logout } from "@components/business/Logout";
 export default async function DashboardLayout({
   children,
 }: {
@@ -55,7 +55,11 @@ export default async function DashboardLayout({
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter>退出登录</SidebarFooter>
+        <SidebarFooter>
+          <SidebarMenuButton asChild>
+            <Logout />
+          </SidebarMenuButton>
+        </SidebarFooter>
       </Sidebar>
       <main className="px-4 py-6 flex-1">
         <div className="flex h-5 items-center space-x-4">
