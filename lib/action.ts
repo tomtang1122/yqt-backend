@@ -64,22 +64,23 @@ export async function loginAction(
       }
     );
 
-    if (data?.adminToken && data?.imToken) {
-      const cookieStore = await cookies();
-      const defaultOptions = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict" as const,
-        maxAge: 60 * 60 * 24, // 24小时
-      };
-      cookieStore.set("admin-token", data.adminToken, defaultOptions);
-      cookieStore.set("im-token", data.imToken, defaultOptions);
-      redirect("/dashboard");
+    if (!data?.adminToken || !data?.imToken) {
+      throw new Error("登录失败");
     }
-    throw new Error("登录失败");
+    const cookieStore = await cookies();
+    const defaultOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict" as const,
+      maxAge: 60 * 60 * 24, // 24小时
+    };
+    cookieStore.set("admin-token", data.adminToken, defaultOptions);
+    cookieStore.set("im-token", data.imToken, defaultOptions);
   } catch (error) {
     throw error instanceof Error ? error : new Error("登录失败");
   }
+
+  redirect("/dashboard");
 }
 
 export async function logoutAction() {
@@ -132,12 +133,12 @@ export async function createEnterpriseAction(
       ADD_ENTERPRISE_REQUEST_URL,
       formDataToSend
     );
-
-    revalidatePath("/dashboard/enterprise");
-    redirect("/dashboard/enterprise");
   } catch (error) {
     throw error instanceof Error ? error : new Error("创建企业失败");
   }
+
+  revalidatePath("/dashboard/enterprise");
+  redirect("/dashboard/enterprise");
 }
 
 export async function updateEnterpriseAction(
@@ -158,12 +159,12 @@ export async function updateEnterpriseAction(
       UPDATE_ENTERPRISE_REQUEST_URL,
       { enterpriseID, ...formDataToSend }
     );
-
-    revalidatePath("/dashboard/enterprise");
-    redirect("/dashboard/enterprise");
   } catch (error) {
     throw error instanceof Error ? error : new Error("更新企业失败");
   }
+
+  revalidatePath("/dashboard/enterprise");
+  redirect("/dashboard/enterprise");
 }
 
 export async function deleteEnterpriseAction(enterpriseID?: string) {
@@ -173,8 +174,9 @@ export async function deleteEnterpriseAction(enterpriseID?: string) {
       DELETE_ENTERPRISE_REQUEST_URL,
       { enterpriseID }
     );
-    revalidatePath("/dashboard/enterprise");
   } catch (error) {
     throw error instanceof Error ? error : new Error("删除企业失败");
   }
+
+  revalidatePath("/dashboard/enterprise");
 }
