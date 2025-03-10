@@ -16,6 +16,8 @@ import { Separator } from "@components/ui/separator";
 import { NavTitle } from "@components/business/NavTitle";
 import { items } from "@lib/config";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@assets/logo.png";
 
 export default async function DashboardLayout({
   children,
@@ -25,7 +27,15 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader>云雀台后台管理系统</SidebarHeader>
+        <SidebarHeader>
+          <div className="flex items-center gap-4">
+            <Image src={logo} alt="favicon" width={44} height={44} />
+            <div className="flex flex-col gap-1">
+              <span className="text-lg font-bold">云雀台</span>
+              <span className="text-sm text-gray-500">后台管理系统</span>
+            </div>
+          </div>
+        </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>管理</SidebarGroupLabel>

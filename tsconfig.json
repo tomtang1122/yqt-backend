@@ -25,7 +25,8 @@
       "@components/*": ["./components/*"],
       "@lib/*": ["./lib/*"],
       "@hooks/*": ["./hooks/*"],
-      "@type/*": ["./type/*"]
+      "@type/*": ["./type/*"],
+      "@assets/*": ["./public//*"]
     },
     "baseUrl": "."
   },

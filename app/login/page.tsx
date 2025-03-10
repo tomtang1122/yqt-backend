@@ -1,4 +1,5 @@
 import { LoginForm } from "@components/business/LoginForm";
+import { Metadata } from "next";
 
 export default function LoginPage() {
   return (
@@ -7,3 +8,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "登录",
+};

@@ -1,5 +1,6 @@
 import { EnterpriseForm } from "@components/business/EnterpriseForm";
 import { createEnterpriseAction } from "@lib/action";
+import { Metadata } from "next";
 
 export default function EnterpriseCreatePage() {
   return (
@@ -9,3 +10,7 @@ export default function EnterpriseCreatePage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "创建企业",
+};

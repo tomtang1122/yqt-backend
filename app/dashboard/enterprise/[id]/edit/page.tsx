@@ -1,7 +1,7 @@
 import { EnterpriseForm } from "@components/business/EnterpriseForm";
 import { fetchEnterpriseById } from "@lib/fetchData";
 import { updateEnterpriseAction } from "@lib/action";
-
+import { Metadata } from "next";
 export default async function EnterpriseEditPage(props: {
   params: Promise<{ id: string }>;
 }) {
@@ -24,3 +24,7 @@ export default async function EnterpriseEditPage(props: {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "更新企业信息",
+};

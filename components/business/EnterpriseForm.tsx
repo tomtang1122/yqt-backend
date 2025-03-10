@@ -53,7 +53,7 @@ export const EnterpriseForm = (props: {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="max-w-[840px]">
+      <form onSubmit={onSubmit} className="max-w-[840px] mt-6">
         <FormField
           control={form.control}
           name="name"

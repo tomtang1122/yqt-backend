@@ -5,6 +5,8 @@ import { Button } from "@components/ui/button";
 import { Icons } from "@components/ui/icon";
 import Link from "next/link";
 import { SearchEnterprise } from "@components/business/SearchEnterprise";
+import { Metadata } from "next";
+
 export default async function EnterpriseManagePage(props: {
   searchParams?: Promise<{
     query?: string;
@@ -42,3 +44,7 @@ export default async function EnterpriseManagePage(props: {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "企业列表",
+};
