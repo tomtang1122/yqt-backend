@@ -4,13 +4,14 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Icons } from "@components/ui/icon";
+import { useDebouncedCallback } from "use-debounce";
 
 export function SearchEnterprise() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handleSearch(term: string) {
+  const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("query", term);
@@ -18,7 +19,7 @@ export function SearchEnterprise() {
       params.delete("query");
     }
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
 
   return (
     <div className="max-w-[360px] relative flex-1">
