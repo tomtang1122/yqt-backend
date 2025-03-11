@@ -3,22 +3,26 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("admin-token");
+  const { pathname } = request.nextUrl;
 
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+  if (pathname === "/") {
+    return token
+      ? NextResponse.redirect(new URL("/dashboard", request.url))
+      : NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (request.nextUrl.pathname.startsWith("/login")) {
-    if (token) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
+  if (pathname.startsWith("/dashboard") && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (pathname === "/login" && token) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
 }
 
+// 匹配需要处理的路由
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/", "/login", "/dashboard/:path*"],
 };
