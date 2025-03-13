@@ -9,6 +9,7 @@ import {
   ChevronRight,
   Search,
   Power,
+  Upload,
 } from "lucide-react";
 
 export const Icons = {
@@ -22,4 +23,5 @@ export const Icons = {
   ChevronRight,
   Search,
   Power,
+  Upload,
 };

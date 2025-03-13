@@ -76,6 +76,7 @@ export async function loginAction(
     };
     cookieStore.set("admin-token", data.adminToken, defaultOptions);
     cookieStore.set("im-token", data.imToken, defaultOptions);
+    cookieStore.set("im-user-id", data.imUserID || "", defaultOptions);
   } catch (error) {
     throw error;
   }

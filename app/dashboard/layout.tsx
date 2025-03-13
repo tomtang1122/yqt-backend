@@ -14,7 +14,7 @@ import {
 } from "@components/ui/sidebar";
 import { Separator } from "@components/ui/separator";
 import { NavTitle } from "@components/business/NavTitle";
-import { items } from "@lib/config";
+import { items } from "@constant/index";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@assets/logo.png";

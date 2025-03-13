@@ -15,6 +15,8 @@ import { Input } from "@components/ui/input";
 import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
 import Link from "next/link";
+import { ImageUploader } from "@components/business/ImageUploader";
+
 type FormData = Omit<EnterpriseParams, "tags">;
 
 export const EnterpriseForm = (props: {
@@ -126,7 +128,10 @@ export const EnterpriseForm = (props: {
             <FormItem className="mb-3">
               <FormLabel className="!text-inherit">企业logo：</FormLabel>
               <FormControl>
-                <Input placeholder="请上传企业logo" {...field} />
+                <ImageUploader
+                  defaultImageUrl={field.value}
+                  onUploadSuccess={(url) => field.onChange(url)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

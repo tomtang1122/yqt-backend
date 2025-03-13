@@ -12,7 +12,7 @@ export function SearchEnterprise() {
   const { replace } = useRouter();
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams ?? {});
     if (term) {
       params.set("query", term);
     } else {
@@ -32,7 +32,7 @@ export function SearchEnterprise() {
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
-        defaultValue={searchParams.get("query")?.toString()}
+        defaultValue={searchParams?.get("query")?.toString()}
       />
       <Icons.Search
         className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500"

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { logoutAction } from "@lib/action";
-import { RECAPTCHA_ERROR } from "@lib/config";
+import { RECAPTCHA_ERROR } from "@constant/index";
 import { Button } from "@components/ui/button";
 
 export default function Error({

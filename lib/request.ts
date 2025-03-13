@@ -1,6 +1,6 @@
 import axios from "axios";
-import { cookies } from "next/headers";
-import { RECAPTCHA_ERROR } from "@lib/config";
+import { RECAPTCHA_ERROR } from "@constant/index";
+import { getCookieValue } from "@lib/commonAction";
 
 export const LOGIN_REQUEST_URL = "/account/login";
 export const QUERY_ENTERPRISE_REQUEST_URL = "/enterprise/query";
@@ -9,7 +9,7 @@ export const ADD_ENTERPRISE_REQUEST_URL = "/enterprise/add";
 export const DELETE_ENTERPRISE_REQUEST_URL = "/enterprise/delete";
 export const UPDATE_ENTERPRISE_REQUEST_URL = "/enterprise/update";
 
-// 创建axios实例
+// 创建通用请求实例
 export const request = axios.create({
   baseURL: "http://43.129.81.231:20009",
   timeout: 10000,
@@ -26,20 +26,58 @@ request.interceptors.request.use(async (config) => {
     return config;
   }
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("admin-token");
+    const token = await getCookieValue("admin-token");
 
     if (token) {
-      config.headers["token"] = token.value;
+      config.headers["token"] = token;
     }
-  } catch (error) {
-    console.error("获取cookie失败", error);
+  } catch {
+    return Promise.reject(new Error("获取cookie失败"));
   }
   return config;
 });
 
 // 响应拦截器
 request.interceptors.response.use(
+  (response) => {
+    const { data } = response;
+    if (data?.errCode || data?.errMsg) {
+      return Promise.reject(new Error(RECAPTCHA_ERROR));
+    }
+    return response;
+  },
+  (error) => {
+    const message = "网络错误，请检查您的网络连接";
+    return Promise.reject(new Error(`${error.response.status}: ${message}`));
+  }
+);
+
+// 创建IM请求实例
+export const requestIM = axios.create({
+  baseURL: "http://43.129.81.231:10002",
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+    operationID: Date.now().toString(),
+    platform: "10",
+  },
+});
+requestIM.interceptors.request.use(async (config) => {
+  if (config.url === LOGIN_REQUEST_URL) {
+    return config;
+  }
+  try {
+    const token = await getCookieValue("im-token");
+
+    if (token) {
+      config.headers["token"] = token;
+    }
+  } catch {
+    return Promise.reject(new Error("获取cookie失败"));
+  }
+  return config;
+});
+requestIM.interceptors.response.use(
   (response) => {
     const { data } = response;
     if (data?.errCode || data?.errMsg) {
