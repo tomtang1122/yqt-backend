@@ -77,7 +77,7 @@ export async function loginAction(
     cookieStore.set("admin-token", data.adminToken, defaultOptions);
     cookieStore.set("im-token", data.imToken, defaultOptions);
   } catch (error) {
-    throw error instanceof Error ? error : new Error("登录失败");
+    throw error;
   }
 
   redirect("/dashboard");
@@ -134,7 +134,7 @@ export async function createEnterpriseAction(
       formDataToSend
     );
   } catch (error) {
-    throw error instanceof Error ? error : new Error("创建企业失败");
+    throw error;
   }
 
   revalidatePath("/dashboard/enterprise");
@@ -160,7 +160,7 @@ export async function updateEnterpriseAction(
       { enterpriseID, ...formDataToSend }
     );
   } catch (error) {
-    throw error instanceof Error ? error : new Error("更新企业失败");
+    throw error;
   }
 
   revalidatePath("/dashboard/enterprise");
@@ -175,7 +175,7 @@ export async function deleteEnterpriseAction(enterpriseID?: string) {
       { enterpriseID }
     );
   } catch (error) {
-    throw error instanceof Error ? error : new Error("删除企业失败");
+    throw error;
   }
 
   revalidatePath("/dashboard/enterprise");

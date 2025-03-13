@@ -25,7 +25,7 @@ export async function fetchEnterprise(
     });
     return data || { total: 0, enterprises: [] };
   } catch (error) {
-    throw error instanceof Error ? error : new Error("获取企业列表失败");
+    throw error;
   }
 }
 
@@ -40,6 +40,6 @@ export async function fetchEnterpriseById(
     });
     return data?.enterprise;
   } catch (error) {
-    throw error instanceof Error ? error : new Error("获取企业列表失败");
+    throw error;
   }
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { cookies } from "next/headers";
+import { RECAPTCHA_ERROR } from "@lib/config";
 
 export const LOGIN_REQUEST_URL = "/account/login";
 export const QUERY_ENTERPRISE_REQUEST_URL = "/enterprise/query";
@@ -40,6 +41,10 @@ request.interceptors.request.use(async (config) => {
 // 响应拦截器
 request.interceptors.response.use(
   (response) => {
+    const { data } = response;
+    if (data?.errCode || data?.errMsg) {
+      return Promise.reject(new Error(RECAPTCHA_ERROR));
+    }
     return response;
   },
   (error) => {

@@ -12,3 +12,5 @@ export const items = [
     icon: Icons.Monitor,
   },
 ];
+
+export const RECAPTCHA_ERROR = "recaptcha_error";
