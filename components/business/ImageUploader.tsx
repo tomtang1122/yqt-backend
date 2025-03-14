@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useTransition } from "react";
 import Image from "next/image";
 import { Button } from "@components/ui/button";
-import { Icons } from "@components/ui/icon";
 import {
   getUploadPartsize,
   getUploadUrl,
@@ -12,6 +11,7 @@ import {
 import { md5 } from "js-md5";
 import { mimeTypesMap } from "@constant/index";
 import { getCookieValue } from "@lib/commonAction";
+import { Icons } from "@components/ui/icon";
 
 export const getMimeType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase() ?? "";
@@ -156,6 +156,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [images, setImages] = useState<ImageFile | undefined>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isPending, startTransition] = useTransition();
 
   const reset = () => {
     setImages(undefined);
@@ -179,18 +180,20 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     setImages(newImages[0]);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = () => {
     if (images?.file) {
-      try {
-        const { url } = await splitUpload(images.file);
-        reset();
-        setImageUrl(url);
-        if (url && onUploadSuccess) {
-          onUploadSuccess(url);
+      startTransition(async () => {
+        try {
+          const { url } = await splitUpload(images.file);
+          reset();
+          setImageUrl(url);
+          if (url && onUploadSuccess) {
+            onUploadSuccess(url);
+          }
+        } catch (error) {
+          throw error;
         }
-      } catch (error) {
-        throw error;
-      }
+      });
     }
   };
 
@@ -225,7 +228,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         </Button>
       </div>
       <div className="mt-2">
-        {images && (
+        {isPending && (
+          <div className="flex items-center gap-2 border rounded-md p-2 justify-center">
+            <Icons.Loader className="w-10 h-10 animate-spin" />
+          </div>
+        )}
+        {images && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
             <Image src={images.preview} alt="上传预览" width={60} height={60} />
             <Button onClick={reset} variant="outline" size="icon" type="button">
@@ -233,8 +241,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             </Button>
           </div>
         )}
-        {(imageUrl || defaultImageUrl) && (
-          <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
+        {(imageUrl || defaultImageUrl) && !isPending && (
+          <div className="flex items-center gap-2 border rounded-md p-2">
             <p className="text-sm text-gray-800 font-bold">
               {imageUrl || defaultImageUrl}
             </p>

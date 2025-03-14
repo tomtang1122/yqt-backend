@@ -10,6 +10,7 @@ import {
   Search,
   Power,
   Upload,
+  Loader,
 } from "lucide-react";
 
 export const Icons = {
@@ -24,4 +25,5 @@ export const Icons = {
   Search,
   Power,
   Upload,
+  Loader,
 };

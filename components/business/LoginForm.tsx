@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useTransition, useActionState } from "react";
 import { loginAction } from "@lib/action";
 import { Button } from "@components/ui/button";
 import { useForm } from "react-hook-form";
@@ -13,9 +13,11 @@ import {
   FormMessage,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
+import { GlobalLoading } from "@components/business/globalLoading";
 
 export const LoginForm = () => {
   const [state, formAction] = useActionState(loginAction, {});
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm({
     defaultValues: {
@@ -26,6 +28,7 @@ export const LoginForm = () => {
 
   return (
     <div className="rounded-xl border bg-card text-card-foreground shadow p-6">
+      {isPending && <GlobalLoading />}
       <div className="mb-6 text-center">
         <div className="font-semibold tracking-tight text-2xl mb-2">登录</div>
         <div className="text-sm text-muted-foreground">
@@ -36,11 +39,13 @@ export const LoginForm = () => {
         <form
           action={formAction}
           className="w-[320px] flex flex-col gap-6"
-          onSubmit={form.handleSubmit(async (data) => {
-            const formData = new FormData();
-            formData.append("username", data.username);
-            formData.append("password", data.password);
-            loginAction({}, formData);
+          onSubmit={form.handleSubmit((data) => {
+            startTransition(async () => {
+              const formData = new FormData();
+              formData.append("username", data.username);
+              formData.append("password", data.password);
+              await loginAction({}, formData);
+            });
           })}
         >
           <FormField
@@ -75,7 +80,7 @@ export const LoginForm = () => {
             )}
           />
 
-          <Button type="submit" variant="default">
+          <Button type="submit" variant="default" disabled={isPending}>
             登录
           </Button>
         </form>

@@ -16,6 +16,8 @@ import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
 import Link from "next/link";
 import { ImageUploader } from "@components/business/ImageUploader";
+import { useTransition } from "react";
+import { GlobalLoading } from "@components/business/globalLoading";
 
 type FormData = Omit<EnterpriseParams, "tags">;
 
@@ -25,6 +27,8 @@ export const EnterpriseForm = (props: {
   isEdit?: boolean;
 }) => {
   const { action, defaultValues, isEdit } = props;
+
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm({
     defaultValues: defaultValues || {
@@ -38,23 +42,26 @@ export const EnterpriseForm = (props: {
     },
   });
 
-  const onSubmit = form.handleSubmit(async (data) => {
-    try {
-      const result = await action(data);
-      if (result?.error) {
-        Object.entries(result.error).forEach(([key, value]) => {
-          form.setError(key as unknown as keyof typeof data, {
-            message: value[0],
+  const onSubmit = form.handleSubmit((data) => {
+    startTransition(async () => {
+      try {
+        const result = await action(data);
+        if (result?.error) {
+          Object.entries(result.error).forEach(([key, value]) => {
+            form.setError(key as unknown as keyof typeof data, {
+              message: value[0],
+            });
           });
-        });
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
-    }
+    });
   });
 
   return (
     <Form {...form}>
+      {isPending && <GlobalLoading />}
       <form onSubmit={onSubmit} className="max-w-[840px] mt-6">
         <FormField
           control={form.control}
@@ -157,7 +164,7 @@ export const EnterpriseForm = (props: {
           <Button asChild type="button" variant="outline">
             <Link href="/dashboard/enterprise">返回</Link>
           </Button>
-          <Button type="submit" variant="default">
+          <Button type="submit" variant="default" disabled={isPending}>
             {isEdit ? "更新" : "创建"}
           </Button>
         </div>
