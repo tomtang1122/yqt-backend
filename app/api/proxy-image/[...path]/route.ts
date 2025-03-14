@@ -10,9 +10,11 @@ async function proxyImage(url: string) {
 
 export async function GET(
   request: Request,
-  { params }: { params: { path: string[] } }
+  context: { params: { path: string[] } }
 ) {
+  const { params } = context;
   const imagePath = params.path.join("/");
+  console.log("~~~~~~~~~~~~~ params:", params);
   const imageUrl = `${IM_REQUEST_URL}/${imagePath}`;
 
   try {
