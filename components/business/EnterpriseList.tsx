@@ -30,6 +30,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
+import { getProxyImageUrl } from "@lib/utils";
 
 export async function EnterpriseList({
   currentPage,
@@ -62,7 +63,10 @@ export async function EnterpriseList({
               <TableCell>{enterprise.name}</TableCell>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src={enterprise.logo} alt="企业 logo" />
+                  <AvatarImage
+                    src={getProxyImageUrl(enterprise.logo || "")}
+                    alt="企业 logo"
+                  />
                   <AvatarFallback>LG</AvatarFallback>
                 </Avatar>
               </TableCell>

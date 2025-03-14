@@ -15,6 +15,9 @@ export const items = [
 
 export const RECAPTCHA_ERROR = "recaptcha_error";
 
+export const GLOBAL_REQUEST_URL = "http://43.129.81.231:20009";
+export const IM_REQUEST_URL = "http://43.129.81.231:10002";
+
 export const mimeTypesMap: Record<string, string> = {
   txt: "text/plain",
   html: "text/html",

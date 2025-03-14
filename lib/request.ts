@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RECAPTCHA_ERROR } from "@constant/index";
 import { getCookieValue } from "@lib/commonAction";
+import { GLOBAL_REQUEST_URL, IM_REQUEST_URL } from "@constant/index";
 
 export const LOGIN_REQUEST_URL = "/account/login";
 export const QUERY_ENTERPRISE_REQUEST_URL = "/enterprise/query";
@@ -11,7 +12,7 @@ export const UPDATE_ENTERPRISE_REQUEST_URL = "/enterprise/update";
 
 // 创建通用请求实例
 export const request = axios.create({
-  baseURL: "http://43.129.81.231:20009",
+  baseURL: GLOBAL_REQUEST_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -54,7 +55,7 @@ request.interceptors.response.use(
 
 // 创建IM请求实例
 export const requestIM = axios.create({
-  baseURL: "http://43.129.81.231:10002",
+  baseURL: IM_REQUEST_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
