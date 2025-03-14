@@ -33,7 +33,16 @@ export const LoginForm = () => {
         </div>
       </div>
       <Form {...form}>
-        <form action={formAction} className="w-[320px] flex flex-col gap-6">
+        <form
+          action={formAction}
+          className="w-[320px] flex flex-col gap-6"
+          onSubmit={form.handleSubmit(async (data) => {
+            const formData = new FormData();
+            formData.append("username", data.username);
+            formData.append("password", data.password);
+            loginAction({}, formData);
+          })}
+        >
           <FormField
             control={form.control}
             name="username"
