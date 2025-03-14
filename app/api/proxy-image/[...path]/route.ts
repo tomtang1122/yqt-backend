@@ -13,10 +13,12 @@ export async function GET(
   { params }: { params: Promise<{ team: string }> }
 ) {
   const { team } = await params;
+  console.log("~~~~~~~~~~~~~ team:", team);
   const imageUrl = `${IM_REQUEST_URL}/${team}`;
 
   try {
     const { imageBuffer, contentType } = await proxyImage(imageUrl);
+    console.log("~~~~~~~~~~~~~ imageBuffer:", imageBuffer, contentType);
     return new NextResponse(imageBuffer, {
       headers: {
         "Content-Type": contentType,
