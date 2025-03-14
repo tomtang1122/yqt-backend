@@ -51,8 +51,13 @@ export async function EnterpriseList({
         <TableHeader>
           <TableRow className="bg-gray-50">
             <TableHead className="w-[120px]">序号</TableHead>
-            <TableHead>企业名称</TableHead>
             <TableHead>企业logo</TableHead>
+            <TableHead>企业名称</TableHead>
+            <TableHead>企业网址</TableHead>
+            <TableHead>企业地址</TableHead>
+            <TableHead>企业邮箱</TableHead>
+            <TableHead>企业电话</TableHead>
+            <TableHead>支持返现</TableHead>
             <TableHead className="text-right">操作</TableHead>
           </TableRow>
         </TableHeader>
@@ -60,7 +65,6 @@ export async function EnterpriseList({
           {enterprises?.map((enterprise, index) => (
             <TableRow key={enterprise.enterpriseID}>
               <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>{enterprise.name}</TableCell>
               <TableCell>
                 <Avatar>
                   <AvatarImage
@@ -69,6 +73,14 @@ export async function EnterpriseList({
                   />
                   <AvatarFallback>LG</AvatarFallback>
                 </Avatar>
+              </TableCell>
+              <TableCell>{enterprise.name}</TableCell>
+              <TableCell>{enterprise.website}</TableCell>
+              <TableCell>{enterprise.address}</TableCell>
+              <TableCell>{enterprise.email}</TableCell>
+              <TableCell>{enterprise.phoneNumber}</TableCell>
+              <TableCell>
+                {enterprise.isEligibleForCashback ? "是" : "否"}
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
