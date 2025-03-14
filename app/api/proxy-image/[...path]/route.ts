@@ -13,8 +13,8 @@ export async function GET(
   { params }: { params: Promise<{ path: string }> }
 ) {
   const { path } = await params;
-  console.log("~~~~~~~~~~~~~ path:", path);
-  const imageUrl = `${IM_REQUEST_URL}/${path}`;
+  const pathString = Array.isArray(path) ? path.join("/") : path;
+  const imageUrl = `${IM_REQUEST_URL}/${pathString}`;
 
   try {
     const { imageBuffer, contentType } = await proxyImage(imageUrl);
