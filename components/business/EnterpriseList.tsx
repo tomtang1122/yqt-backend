@@ -1,5 +1,4 @@
 import { fetchEnterprise, MAX_ENTERPRISE_PER_PAGE } from "@lib/fetchData";
-import { deleteEnterpriseAction } from "@lib/action";
 import {
   Table,
   TableBody,
@@ -19,18 +18,8 @@ import {
   PaginationPrevious,
 } from "@components/ui/pagination";
 import { Avatar, AvatarImage, AvatarFallback } from "@components/ui/avatar";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@components/ui/alert-dialog";
 import { getProxyImageUrl } from "@lib/utils";
+import { DeleteEnterprise } from "@components/business/DeleteEnterprise";
 
 export async function EnterpriseList({
   currentPage,
@@ -91,36 +80,7 @@ export async function EnterpriseList({
                       <Icons.Pencil className="w-4 h-4" />
                     </Link>
                   </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <Icons.Trash className="w-4 h-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          是否确定删除当前企业
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          删除后，当前企业将无法使用，请谨慎操作。
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>取消</AlertDialogCancel>
-                        <form
-                          action={deleteEnterpriseAction.bind(
-                            null,
-                            enterprise.enterpriseID
-                          )}
-                        >
-                          <AlertDialogAction type="submit">
-                            确定
-                          </AlertDialogAction>
-                        </form>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                  <DeleteEnterprise enterpriseID={enterprise.enterpriseID} />
                 </div>
               </TableCell>
             </TableRow>
