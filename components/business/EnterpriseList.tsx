@@ -18,6 +18,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@components/ui/pagination";
+import { Avatar, AvatarImage, AvatarFallback } from "@components/ui/avatar";
 
 export async function EnterpriseList({
   currentPage,
@@ -37,8 +38,9 @@ export async function EnterpriseList({
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-50">
-            <TableHead className="w-[200px]">序号</TableHead>
+            <TableHead className="w-[120px]">序号</TableHead>
             <TableHead>企业名称</TableHead>
+            <TableHead>企业logo</TableHead>
             <TableHead className="text-right">操作</TableHead>
           </TableRow>
         </TableHeader>
@@ -47,6 +49,12 @@ export async function EnterpriseList({
             <TableRow key={enterprise.enterpriseID}>
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>{enterprise.name}</TableCell>
+              <TableCell>
+                <Avatar>
+                  <AvatarImage src={enterprise.logo} alt="企业 logo" />
+                  <AvatarFallback>LG</AvatarFallback>
+                </Avatar>
+              </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
                   <Button variant="ghost" size="icon">
