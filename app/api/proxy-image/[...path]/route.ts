@@ -13,6 +13,7 @@ export async function GET(
   { params }: { params: Promise<{ path: string }> }
 ) {
   const { path } = await params;
+  console.log("~~~~~~~~~~~~~ path:", path);
   const imageUrl = `${IM_REQUEST_URL}/${path}`;
 
   try {
