@@ -93,12 +93,7 @@ export async function logoutAction() {
 
 export type EnterpriseFormState = {
   error?: {
-    logo?: string[];
-    name?: string[];
-    website?: string[];
-    address?: string[];
-    phoneNumber?: string[];
-    email?: string[];
+    [K in keyof EnterpriseParams]?: string[];
   };
 };
 
@@ -114,11 +109,12 @@ const enterpriseFormSchema = z.object({
       "请输入有效的电话号码"
     ),
   email: z.string().email({ message: "请输入有效的邮箱地址" }),
+  tags: z.array(z.string()).min(1, { message: "至少添加一个标签" }),
   isEligibleForCashback: z.boolean().default(false).optional(),
 });
 
 export async function createEnterpriseAction(
-  formData: Omit<EnterpriseParams, "tags">
+  formData: EnterpriseParams
 ): Promise<EnterpriseFormState | undefined> {
   const validatedFields = enterpriseFormSchema.safeParse(formData);
 
@@ -144,7 +140,7 @@ export async function createEnterpriseAction(
 
 export async function updateEnterpriseAction(
   enterpriseID: string,
-  formData: Omit<EnterpriseParams, "tags">
+  formData: EnterpriseParams
 ): Promise<EnterpriseFormState | undefined> {
   const validatedFields = enterpriseFormSchema.safeParse(formData);
 

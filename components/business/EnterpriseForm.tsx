@@ -16,19 +16,22 @@ import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
 import Link from "next/link";
 import { ImageUploader } from "@components/business/ImageUploader";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { GlobalLoading } from "@components/business/globalLoading";
-
-type FormData = Omit<EnterpriseParams, "tags">;
+import { Icons } from "@components/ui/icon";
 
 export const EnterpriseForm = (props: {
-  action: (formData: FormData) => Promise<EnterpriseFormState | undefined>;
-  defaultValues?: FormData;
+  action: (
+    formData: EnterpriseParams
+  ) => Promise<EnterpriseFormState | undefined>;
+  defaultValues?: EnterpriseParams;
   isEdit?: boolean;
 }) => {
   const { action, defaultValues, isEdit } = props;
 
   const [isPending, startTransition] = useTransition();
+  const [tagInput, setTagInput] = useState("");
+  const [isAddTag, setIsAddTag] = useState<boolean>(false);
 
   const form = useForm({
     defaultValues: defaultValues || {
@@ -38,6 +41,7 @@ export const EnterpriseForm = (props: {
       address: "",
       phoneNumber: "",
       email: "",
+      tags: [],
       isEligibleForCashback: false,
     },
   });
@@ -48,7 +52,7 @@ export const EnterpriseForm = (props: {
         const result = await action(data);
         if (result?.error) {
           Object.entries(result.error).forEach(([key, value]) => {
-            form.setError(key as unknown as keyof typeof data, {
+            form.setError(key as keyof EnterpriseParams, {
               message: value[0],
             });
           });
@@ -58,6 +62,28 @@ export const EnterpriseForm = (props: {
       }
     });
   });
+
+  const removeTag = (tagToRemove: string) => {
+    const currentTags = form.getValues("tags") || [];
+    form.setValue(
+      "tags",
+      currentTags.filter((tag) => tag !== tagToRemove)
+    );
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (tagInput.trim() !== "") {
+        const currentTags = form.getValues("tags") || [];
+        if (!currentTags.includes(tagInput.trim())) {
+          form.setValue("tags", [...currentTags, tagInput.trim()]);
+        }
+        setTagInput("");
+        setIsAddTag(false);
+      }
+    }
+  };
 
   return (
     <Form {...form}>
@@ -140,6 +166,53 @@ export const EnterpriseForm = (props: {
                   onUploadSuccess={(url) => field.onChange(url)}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业标签：</FormLabel>
+              <div className="flex flex-wrap gap-2 mb-2 items-center">
+                {isAddTag ? (
+                  <Input
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="输入企业标签, 按回车添加"
+                    className="w-[200px]"
+                  />
+                ) : (
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => setIsAddTag(true)}
+                  >
+                    <Icons.Plus className="w-4 h-4" />
+                  </Button>
+                )}
+                {field.value?.map((tag, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md"
+                  >
+                    <span>{tag}</span>
+                    <Button
+                      className="hover:bg-transparent"
+                      onClick={() => removeTag(tag)}
+                      variant="ghost"
+                      size="icon"
+                      type="button"
+                    >
+                      <Icons.Trash className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
               <FormMessage />
             </FormItem>
           )}
