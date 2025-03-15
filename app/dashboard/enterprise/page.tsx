@@ -14,7 +14,7 @@ export default async function EnterpriseManagePage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const query = searchParams?.query;
+  const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 
   return (
@@ -31,6 +31,7 @@ export default async function EnterpriseManagePage(props: {
       </div>
 
       <Suspense
+        key={`${currentPage}-${query}`}
         fallback={
           <div className="flex flex-col gap-4">
             {Array.from({ length: 11 }).map((_, index) => (
