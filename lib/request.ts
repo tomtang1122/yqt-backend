@@ -49,7 +49,9 @@ request.interceptors.response.use(
   },
   (error) => {
     const message = "网络错误，请检查您的网络连接";
-    return Promise.reject(new Error(`${error.response.status}: ${message}`));
+    return Promise.reject(
+      new Error(`${error?.response?.status ?? "500"}: ${message}`)
+    );
   }
 );
 
@@ -88,6 +90,8 @@ requestIM.interceptors.response.use(
   },
   (error) => {
     const message = "网络错误，请检查您的网络连接";
-    return Promise.reject(new Error(`${error.response.status}: ${message}`));
+    return Promise.reject(
+      new Error(`${error?.response?.status ?? "500"}: ${message}`)
+    );
   }
 );
