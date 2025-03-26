@@ -11,12 +11,17 @@ export const items = [
     url: "/dashboard/enterprise",
     icon: Icons.Monitor,
   },
+  {
+    title: "网站内容管理",
+    url: "/dashboard/content-management",
+    icon: Icons.BookA,
+  },
 ];
 
 export const RECAPTCHA_ERROR = "recaptcha_error";
 
-export const GLOBAL_REQUEST_URL = "http://43.129.81.231:20009";
-export const IM_REQUEST_URL = "http://43.129.81.231:10002";
+export const GLOBAL_REQUEST_URL = "http://101.42.151.19:10009";
+export const IM_REQUEST_URL = "http://101.42.151.19:10002";
 
 export const mimeTypesMap: Record<string, string> = {
   txt: "text/plain",

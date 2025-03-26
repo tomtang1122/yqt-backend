@@ -2,6 +2,7 @@ import {
   request,
   GET_ENTERPRISE_REQUEST_URL,
   QUERY_ENTERPRISE_REQUEST_URL,
+  GET_CLIENT_CONFIG_URL,
 } from "./request";
 import { Response, Enterprise } from "@type/common";
 
@@ -39,6 +40,23 @@ export async function fetchEnterpriseById(
       enterpriseID: id,
     });
     return data?.enterprise;
+  } catch (error) {
+    throw error;
+  }
+}
+
+type ClientConfigResponse = {
+  [key: string]: string;
+};
+
+export async function fetchClientConfig(): Promise<
+  ClientConfigResponse | undefined
+> {
+  try {
+    const { data: { data } = {} } = await request.post<
+      Response<ClientConfigResponse>
+    >(GET_CLIENT_CONFIG_URL, {});
+    return data;
   } catch (error) {
     throw error;
   }

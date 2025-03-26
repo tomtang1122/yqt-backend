@@ -10,6 +10,7 @@ import {
   ADD_ENTERPRISE_REQUEST_URL,
   DELETE_ENTERPRISE_REQUEST_URL,
   UPDATE_ENTERPRISE_REQUEST_URL,
+  SET_CLIENT_CONFIG_URL,
 } from "./request";
 import { Response, EnterpriseParams } from "@type/common";
 import { md5 } from "js-md5";
@@ -176,4 +177,21 @@ export async function deleteEnterpriseAction(enterpriseID?: string) {
   }
 
   revalidatePath("/dashboard/enterprise");
+}
+
+interface ClientConfig {
+  mobileBanner?: string;
+  pcBanner?: string;
+}
+
+export async function updateClientConfigAction(formData: ClientConfig) {
+  try {
+    await request.post<Response<EnterpriseParams>>(SET_CLIENT_CONFIG_URL, {
+      config: formData,
+    });
+  } catch (error) {
+    throw error;
+  }
+
+  // revalidatePath("/dashboard/content-management");
 }

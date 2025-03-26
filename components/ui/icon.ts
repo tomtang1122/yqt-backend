@@ -11,6 +11,7 @@ import {
   Power,
   Upload,
   Loader,
+  BookA,
 } from "lucide-react";
 
 export const Icons = {
@@ -26,4 +27,5 @@ export const Icons = {
   Power,
   Upload,
   Loader,
+  BookA,
 };

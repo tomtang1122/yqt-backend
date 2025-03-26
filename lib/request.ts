@@ -9,6 +9,8 @@ export const GET_ENTERPRISE_REQUEST_URL = "/enterprise/get";
 export const ADD_ENTERPRISE_REQUEST_URL = "/enterprise/add";
 export const DELETE_ENTERPRISE_REQUEST_URL = "/enterprise/delete";
 export const UPDATE_ENTERPRISE_REQUEST_URL = "/enterprise/update";
+export const GET_CLIENT_CONFIG_URL = "/client_config/get";
+export const SET_CLIENT_CONFIG_URL = "/client_config/set";
 
 // 创建通用请求实例
 export const request = axios.create({
