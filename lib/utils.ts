@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * 将原始图片URL转换为代理URL
- * 例如: http://43.129.81.231:10002/object/imAdmin/logo.png -> /api/proxy-image/object/imAdmin/logo.png
+ * 例如: ${host}/object/imAdmin/logo.png -> /api/proxy-image/object/imAdmin/logo.png
  * @param url 原始图片URL
  * @returns 代理后的图片URL
  */
