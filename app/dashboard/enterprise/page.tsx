@@ -31,7 +31,7 @@ export default async function EnterpriseManagePage(props: {
       </div>
 
       <Suspense
-        key={`${currentPage}-${query}`}
+        key={`${currentPage}-${query}`} // 如果没有key，只会在第一次加载fallback，不会在每次搜索时更新
         fallback={
           <div className="flex flex-col gap-4">
             {Array.from({ length: 11 }).map((_, index) => (

@@ -8,13 +8,20 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@components/ui/form";
 import { ImageUploader } from "@components/business/ImageUploader";
 import { useTransition } from "react";
 import { GlobalLoading } from "@components/business/globalLoading";
+import Image from "next/image";
+import { getProxyImageUrl } from "@lib/utils";
+import { updateClientConfigAction } from "@lib/action";
+import { ClientConfig } from "@type/common";
 
-export const ContentManageForm = () => {
+export const ContentManageForm = ({
+  clientConfig,
+}: {
+  clientConfig: ClientConfig;
+}) => {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm({
@@ -27,8 +34,7 @@ export const ContentManageForm = () => {
   const onSubmit = form.handleSubmit((data) => {
     startTransition(async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log("~~~~~~~~~~~~~ data:", data);
+        await updateClientConfigAction(data);
       } catch (e) {
         console.error(e);
       }
@@ -43,15 +49,29 @@ export const ContentManageForm = () => {
           control={form.control}
           name="mobileBanner"
           render={({ field }) => (
-            <FormItem className="mb-3">
-              <FormLabel className="!text-inherit">移动端广告横幅：</FormLabel>
+            <FormItem className="mb-6">
+              <FormLabel className="!text-inherit">
+                1. 移动端广告横幅：
+              </FormLabel>
               <FormControl>
                 <ImageUploader
                   defaultImageUrl={field.value}
                   onUploadSuccess={(url) => field.onChange(url)}
                 />
               </FormControl>
-              <FormMessage />
+              <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
+                <span>当前图片：</span>
+                {clientConfig.mobileBanner ? (
+                  <Image
+                    src={getProxyImageUrl(clientConfig.mobileBanner)}
+                    alt="移动端广告横幅"
+                    width={120}
+                    height={120}
+                  />
+                ) : (
+                  <span>无</span>
+                )}
+              </div>
             </FormItem>
           )}
         />
@@ -60,14 +80,28 @@ export const ContentManageForm = () => {
           name="pcBanner"
           render={({ field }) => (
             <FormItem className="mb-8">
-              <FormLabel className="!text-inherit">桌面端广告横幅：</FormLabel>
+              <FormLabel className="!text-inherit">
+                2. 桌面端广告横幅：
+              </FormLabel>
               <FormControl>
                 <ImageUploader
                   defaultImageUrl={field.value}
                   onUploadSuccess={(url) => field.onChange(url)}
                 />
               </FormControl>
-              <FormMessage />
+              <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
+                <span>当前图片：</span>
+                {clientConfig.pcBanner ? (
+                  <Image
+                    src={getProxyImageUrl(clientConfig.pcBanner)}
+                    alt="桌面端广告横幅"
+                    width={120}
+                    height={120}
+                  />
+                ) : (
+                  <span>无</span>
+                )}
+              </div>
             </FormItem>
           )}
         />

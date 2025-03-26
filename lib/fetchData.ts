@@ -4,7 +4,7 @@ import {
   QUERY_ENTERPRISE_REQUEST_URL,
   GET_CLIENT_CONFIG_URL,
 } from "./request";
-import { Response, Enterprise } from "@type/common";
+import { Response, Enterprise, ClientConfig } from "@type/common";
 
 type EnterpriseResponse = {
   total?: number;
@@ -45,9 +45,9 @@ export async function fetchEnterpriseById(
   }
 }
 
-type ClientConfigResponse = {
-  [key: string]: string;
-};
+interface ClientConfigResponse {
+  config: ClientConfig;
+}
 
 export async function fetchClientConfig(): Promise<
   ClientConfigResponse | undefined

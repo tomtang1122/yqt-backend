@@ -20,3 +20,9 @@ export interface Enterprise extends EnterpriseParams {
   createTime?: number;
   enterpriseID?: string;
 }
+
+export interface ClientConfig {
+  mobileBanner?: string;
+  pcBanner?: string;
+  [key: string]: string | undefined;
+}

@@ -235,7 +235,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         )}
         {images && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
-            <Image src={images.preview} alt="上传预览" width={60} height={60} />
+            <div className="flex items-center gap-2">
+              <span>预览：</span>
+              <Image
+                src={images.preview}
+                alt="上传预览"
+                width={60}
+                height={60}
+              />
+            </div>
             <Button onClick={reset} variant="outline" size="icon" type="button">
               <Icons.Trash className="w-4 h-4" />
             </Button>
@@ -244,7 +252,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         {(imageUrl || defaultImageUrl) && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2">
             <p className="text-sm text-gray-800 font-bold">
-              {imageUrl || defaultImageUrl}
+              图片路径：{imageUrl || defaultImageUrl}
             </p>
           </div>
         )}
