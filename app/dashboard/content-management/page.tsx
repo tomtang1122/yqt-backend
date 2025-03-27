@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { ContentManageForm } from "@components/business/ContentManageForm";
 import { fetchClientConfig } from "@lib/fetchData";
 
+export const dynamic = "force-dynamic";
+
 export default async function ContentManagementPage() {
   const clientConfig = await fetchClientConfig();
 
