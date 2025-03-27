@@ -13,7 +13,6 @@ import { ImageUploader } from "@components/business/ImageUploader";
 import { useTransition } from "react";
 import { GlobalLoading } from "@components/business/globalLoading";
 import Image from "next/image";
-import { getProxyImageUrl } from "@lib/utils";
 import { updateClientConfigAction } from "@lib/action";
 import { ClientConfig } from "@type/common";
 
@@ -63,7 +62,7 @@ export const ContentManageForm = ({
                 <span>当前图片：</span>
                 {clientConfig.mobileBanner ? (
                   <Image
-                    src={getProxyImageUrl(clientConfig.mobileBanner)}
+                    src={clientConfig.mobileBanner}
                     alt="移动端广告横幅"
                     width={120}
                     height={120}
@@ -93,7 +92,7 @@ export const ContentManageForm = ({
                 <span>当前图片：</span>
                 {clientConfig.pcBanner ? (
                   <Image
-                    src={getProxyImageUrl(clientConfig.pcBanner)}
+                    src={clientConfig.pcBanner}
                     alt="桌面端广告横幅"
                     width={120}
                     height={120}

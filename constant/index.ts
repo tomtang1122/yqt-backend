@@ -20,8 +20,8 @@ export const items = [
 
 export const RECAPTCHA_ERROR = "recaptcha_error";
 
-export const GLOBAL_REQUEST_URL = "http://101.42.151.19:10009";
-export const IM_REQUEST_URL = "http://101.42.151.19:10002";
+export const GLOBAL_REQUEST_URL = "https://yunquetai.com/complete_admin";
+export const IM_REQUEST_URL = "https://yunquetai.com/api";
 
 export const mimeTypesMap: Record<string, string> = {
   txt: "text/plain",
