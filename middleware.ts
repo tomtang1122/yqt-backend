@@ -4,8 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("admin-token");
   const { pathname, basePath } = request.nextUrl;
-  console.log("~~~~~~~~~~~~~ pathname:", pathname);
-  console.log("~~~~~~~~~~~~~ basePath:", basePath);
+  console.log("~~~~~~~~~~~~~ pathname:", pathname, " basePath:", basePath);
 
   if (pathname === "/") {
     return token
