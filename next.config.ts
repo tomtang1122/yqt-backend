@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  // basePath: "/docs",
+  basePath: process.env.BASE_PATH,
 };
 
 export default nextConfig;
