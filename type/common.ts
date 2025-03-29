@@ -5,6 +5,11 @@ export interface Response<T> {
   data?: T;
 }
 
+export interface LoginFormParams {
+  username?: string;
+  password?: string;
+}
+
 export interface EnterpriseParams {
   logo?: string;
   name?: string;

@@ -14,9 +14,9 @@ import {
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
 import { GlobalLoading } from "@components/business/globalLoading";
+import type { LoginFormParams } from "@type/common";
 
 export const LoginForm = () => {
-  const [state, formAction] = useActionState(loginAction, {});
   const [isPending, startTransition] = useTransition();
 
   const form = useForm({
@@ -37,14 +37,21 @@ export const LoginForm = () => {
       </div>
       <Form {...form}>
         <form
-          action={formAction}
           className="w-[320px] flex flex-col gap-6"
           onSubmit={form.handleSubmit((data) => {
             startTransition(async () => {
-              const formData = new FormData();
-              formData.append("username", data.username);
-              formData.append("password", data.password);
-              await loginAction({}, formData);
+              try {
+                const result = await loginAction(data);
+                if (result?.error) {
+                  Object.entries(result.error).forEach(([key, value]) => {
+                    form.setError(key as keyof LoginFormParams, {
+                      message: value[0],
+                    });
+                  });
+                }
+              } catch (e) {
+                throw e;
+              }
             });
           })}
         >
@@ -53,13 +60,11 @@ export const LoginForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>用户名</FormLabel>
+                <FormLabel className="!text-inherit">用户名</FormLabel>
                 <FormControl>
                   <Input placeholder="请输入用户名" {...field} />
                 </FormControl>
-                {state?.error?.username && (
-                  <FormMessage>{state.error.username[0]}</FormMessage>
-                )}
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -69,13 +74,11 @@ export const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>密码</FormLabel>
+                <FormLabel className="!text-inherit">密码</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="请输入密码" {...field} />
                 </FormControl>
-                {state?.error?.password && (
-                  <FormMessage>{state.error.password[0]}</FormMessage>
-                )}
+                <FormMessage />
               </FormItem>
             )}
           />

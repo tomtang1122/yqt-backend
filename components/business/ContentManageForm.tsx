@@ -35,7 +35,7 @@ export const ContentManageForm = ({
       try {
         await updateClientConfigAction(data);
       } catch (e) {
-        console.error(e);
+        throw e;
       }
     });
   });

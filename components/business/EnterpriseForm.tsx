@@ -58,7 +58,7 @@ export const EnterpriseForm = (props: {
           });
         }
       } catch (e) {
-        console.error(e);
+        throw e;
       }
     });
   });

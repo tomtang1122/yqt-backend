@@ -12,7 +12,8 @@ import {
   UPDATE_ENTERPRISE_REQUEST_URL,
   SET_CLIENT_CONFIG_URL,
 } from "./request";
-import { Response, EnterpriseParams, ClientConfig } from "@type/common";
+import { RECAPTCHA_ERROR } from "@constant/index";
+import type { Response, EnterpriseParams, ClientConfig, LoginFormParams } from "@type/common";
 import { md5 } from "js-md5";
 
 type LoginResponse = Response<{
@@ -28,24 +29,17 @@ type LoginResponse = Response<{
 
 type LoginFormState = {
   error?: {
-    username?: string[];
-    password?: string[];
+    [K in keyof LoginFormParams]?: string[];
   };
 };
 
 const LoginFormSchema = z.object({
   username: z.string().min(1, { message: "用户名不能为空" }),
-  password: z.string().min(1, { message: "密码至少需要1个字符" }),
+  password: z.string().min(1, { message: "密码不能为空" }),
 });
 
-export async function loginAction(
-  _: LoginFormState,
-  formData: FormData
-): Promise<LoginFormState> {
-  const validatedFields = LoginFormSchema.safeParse({
-    username: formData.get("username"),
-    password: formData.get("password"),
-  });
+export async function loginAction(formData: LoginFormParams): Promise<LoginFormState> {
+  const validatedFields = LoginFormSchema.safeParse(formData);
 
   // validate error
   if (!validatedFields.success) {
@@ -66,7 +60,7 @@ export async function loginAction(
     );
 
     if (!data?.adminToken || !data?.imToken) {
-      throw new Error("登录失败");
+      return { error: { password: ['密码错误'] } }
     }
     const cookieStore = await cookies();
     const defaultOptions = {
@@ -79,7 +73,11 @@ export async function loginAction(
     cookieStore.set("im-token", data.imToken, defaultOptions);
     cookieStore.set("im-user-id", data.imUserID || "", defaultOptions);
   } catch (error) {
-    throw error;
+    if (error instanceof Error && error.message === RECAPTCHA_ERROR) {
+      return { error: { password: ['密码错误'] } }
+    } else {
+      throw error;
+    }
   }
 
   redirect("/dashboard");
