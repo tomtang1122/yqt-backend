@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useActionState } from "react";
+import { useTransition } from "react";
 import { loginAction } from "@lib/action";
 import { Button } from "@components/ui/button";
 import { useForm } from "react-hook-form";

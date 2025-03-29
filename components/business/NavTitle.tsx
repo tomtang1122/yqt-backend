@@ -6,15 +6,16 @@ import Link from "next/link";
 
 const items = [
   {
-    condition: (pathname: string) => pathname === "/dashboard",
+    condition: (pathname: string | null) => pathname === "/dashboard",
     title: <span>信息面板</span>,
   },
   {
-    condition: (pathname: string) => pathname === "/dashboard/enterprise",
+    condition: (pathname: string | null) =>
+      pathname === "/dashboard/enterprise",
     title: <span>企业列表</span>,
   },
   {
-    condition: (pathname: string) =>
+    condition: (pathname: string | null) =>
       pathname === "/dashboard/enterprise/create",
     title: (
       <>
@@ -25,8 +26,8 @@ const items = [
     ),
   },
   {
-    condition: (pathname: string) =>
-      pathname.includes("/dashboard/enterprise") && pathname.includes("/edit"),
+    condition: (pathname: string | null) =>
+      pathname?.includes("/dashboard/enterprise") && pathname.includes("/edit"),
     title: (
       <>
         <Link href="/dashboard/enterprise">企业列表</Link>
