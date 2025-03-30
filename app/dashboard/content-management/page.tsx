@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { ContentBannerImageForm } from "@components/business/ContentBannerImageForm";
 import { fetchClientConfig } from "@lib/fetchData";
 import { CLIENT_CONFIG_FIELD_NAME } from "@constant/index";
+import { ContentTextForm } from "@components/business/ContentTextForm";
 
 // 为什么要强行将本页面作为动态：
 //     因为页面的动态获取会依赖cookie中的token，如果作为静态页面，项目会在构建的时候进行网络请求，但是
@@ -27,6 +28,13 @@ export default async function ContentManagementPage() {
         <ContentBannerImageForm
           configValue={config?.[CLIENT_CONFIG_FIELD_NAME.PC_BANNER]}
           filedName={CLIENT_CONFIG_FIELD_NAME.PC_BANNER}
+        />
+      </div>
+      <div className="mb-8">
+        <p className="mb-2 text-lg">3. APP下载地址：</p>
+        <ContentTextForm
+          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.APP_DOWNLOAD_URL]}
+          filedName={CLIENT_CONFIG_FIELD_NAME.APP_DOWNLOAD_URL}
         />
       </div>
     </div>

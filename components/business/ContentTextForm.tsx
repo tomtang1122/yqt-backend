@@ -9,15 +9,14 @@ import {
   FormItem,
   FormMessage,
 } from "@components/ui/form";
-import { ImageUploader } from "@components/business/ImageUploader";
+import { Input } from "@components/ui/input";
 import { useTransition } from "react";
 import { GlobalLoading } from "@components/business/globalLoading";
-import Image from "next/image";
 import { updateClientConfigAction } from "@lib/action";
 import { ClientConfig } from "@type/common";
 import { CLIENT_CONFIG_PLACEHOLDER } from "@constant/index";
 
-export const ContentBannerImageForm = ({
+export const ContentTextForm = ({
   configValue,
   filedName,
 }: {
@@ -28,7 +27,7 @@ export const ContentBannerImageForm = ({
 
   const form = useForm({
     defaultValues: {
-      [filedName]: "",
+      [filedName]: configValue,
     },
   });
 
@@ -59,25 +58,12 @@ export const ContentBannerImageForm = ({
           render={({ field }) => (
             <FormItem className="mb-6">
               <FormControl>
-                <ImageUploader
-                  defaultImageUrl={field.value}
-                  onUploadSuccess={(url) => field.onChange(url)}
+                <Input
+                  placeholder={CLIENT_CONFIG_PLACEHOLDER[filedName]}
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
-              <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
-                <span>当前图片：</span>
-                {configValue ? (
-                  <Image
-                    src={configValue}
-                    alt={CLIENT_CONFIG_PLACEHOLDER[filedName]}
-                    width={120}
-                    height={120}
-                  />
-                ) : (
-                  <span>无</span>
-                )}
-              </div>
             </FormItem>
           )}
         />

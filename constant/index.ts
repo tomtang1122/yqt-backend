@@ -27,10 +27,12 @@ export const IM_REQUEST_URL = "https://yunquetai.com/api";
 export const CLIENT_CONFIG_FIELD_NAME: Record<string, keyof ClientConfig> = {
   MOBILE_BANNER: "mobileBanner",
   PC_BANNER: "pcBanner",
+  APP_DOWNLOAD_URL: "appDownloadUrl",
 };
-export const CLIENT_CONFIG_IMAGE_ALT = {
+export const CLIENT_CONFIG_PLACEHOLDER: Record<keyof ClientConfig, string> = {
   mobileBanner: "移动端广告横幅",
   pcBanner: "桌面端广告横幅",
+  appDownloadUrl: "请输入APP下载地址",
 };
 
 export const mimeTypesMap: Record<string, string> = {
