@@ -1,4 +1,5 @@
 import { Icons } from "@components/ui/icon";
+import { ClientConfig } from "@type/common";
 
 export const items = [
   {
@@ -22,6 +23,15 @@ export const RECAPTCHA_ERROR = "recaptcha_error";
 
 export const GLOBAL_REQUEST_URL = "https://yunquetai.com/complete_admin";
 export const IM_REQUEST_URL = "https://yunquetai.com/api";
+
+export const CLIENT_CONFIG_FIELD_NAME: Record<string, keyof ClientConfig> = {
+  MOBILE_BANNER: "mobileBanner",
+  PC_BANNER: "pcBanner",
+};
+export const CLIENT_CONFIG_IMAGE_ALT = {
+  mobileBanner: "移动端广告横幅",
+  pcBanner: "桌面端广告横幅",
+};
 
 export const mimeTypesMap: Record<string, string> = {
   txt: "text/plain",

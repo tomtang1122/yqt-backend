@@ -13,7 +13,12 @@ import {
   SET_CLIENT_CONFIG_URL,
 } from "./request";
 import { RECAPTCHA_ERROR } from "@constant/index";
-import type { Response, EnterpriseParams, ClientConfig, LoginFormParams } from "@type/common";
+import type {
+  Response,
+  EnterpriseParams,
+  ClientConfig,
+  LoginFormParams,
+} from "@type/common";
 import { md5 } from "js-md5";
 
 type LoginResponse = Response<{
@@ -38,7 +43,9 @@ const LoginFormSchema = z.object({
   password: z.string().min(1, { message: "密码不能为空" }),
 });
 
-export async function loginAction(formData: LoginFormParams): Promise<LoginFormState> {
+export async function loginAction(
+  formData: LoginFormParams
+): Promise<LoginFormState> {
   const validatedFields = LoginFormSchema.safeParse(formData);
 
   // validate error
@@ -60,7 +67,7 @@ export async function loginAction(formData: LoginFormParams): Promise<LoginFormS
     );
 
     if (!data?.adminToken || !data?.imToken) {
-      return { error: { password: ['密码错误'] } }
+      return { error: { password: ["密码错误"] } };
     }
     const cookieStore = await cookies();
     const defaultOptions = {
@@ -74,7 +81,7 @@ export async function loginAction(formData: LoginFormParams): Promise<LoginFormS
     cookieStore.set("im-user-id", data.imUserID || "", defaultOptions);
   } catch (error) {
     if (error instanceof Error && error.message === RECAPTCHA_ERROR) {
-      return { error: { password: ['密码错误'] } }
+      return { error: { password: ["密码错误"] } };
     } else {
       throw error;
     }
@@ -177,7 +184,35 @@ export async function deleteEnterpriseAction(enterpriseID?: string) {
   revalidatePath("/dashboard/enterprise");
 }
 
-export async function updateClientConfigAction(formData: ClientConfig) {
+export type ClientConfigState = {
+  error?: {
+    [K in keyof ClientConfig]?: string[];
+  };
+};
+
+const clientConfigSchema = z.object({
+  mobileBanner: z.string().min(1, { message: "请上传移动端广告横幅" }),
+  pcBanner: z.string().min(1, { message: "请上传PC端广告横幅" }),
+});
+
+export async function updateClientConfigAction(
+  formData: ClientConfig,
+  fieldsToValidate: (keyof ClientConfig)[]
+): Promise<ClientConfigState | undefined> {
+  const requiredFields = fieldsToValidate.reduce((acc, field) => {
+    acc[field] = true;
+    return acc;
+  }, {} as Record<keyof ClientConfig, true>);
+  const validatedFields = clientConfigSchema
+    .pick(requiredFields)
+    .safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
   try {
     await request.post<Response<EnterpriseParams>>(SET_CLIENT_CONFIG_URL, {
       config: formData,

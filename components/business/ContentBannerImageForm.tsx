@@ -7,7 +7,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  FormMessage,
 } from "@components/ui/form";
 import { ImageUploader } from "@components/business/ImageUploader";
 import { useTransition } from "react";
@@ -15,25 +15,34 @@ import { GlobalLoading } from "@components/business/globalLoading";
 import Image from "next/image";
 import { updateClientConfigAction } from "@lib/action";
 import { ClientConfig } from "@type/common";
+import { CLIENT_CONFIG_IMAGE_ALT } from "@constant/index";
 
-export const ContentManageForm = ({
-  clientConfig,
+export const ContentBannerImageForm = ({
+  configValue,
+  filedName,
 }: {
-  clientConfig: ClientConfig;
+  configValue?: string;
+  filedName: keyof ClientConfig;
 }) => {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm({
     defaultValues: {
-      mobileBanner: "",
-      pcBanner: "",
+      [filedName]: "",
     },
   });
 
   const onSubmit = form.handleSubmit((data) => {
     startTransition(async () => {
       try {
-        await updateClientConfigAction(data);
+        const result = await updateClientConfigAction(data, [filedName]);
+        if (result?.error) {
+          Object.entries(result.error).forEach(([key, value]) => {
+            form.setError(key, {
+              message: value[0],
+            });
+          });
+        }
       } catch (e) {
         throw e;
       }
@@ -43,57 +52,29 @@ export const ContentManageForm = ({
   return (
     <Form {...form}>
       {isPending && <GlobalLoading />}
-      <form onSubmit={onSubmit} className="max-w-[840px] mt-6">
+      <form onSubmit={onSubmit} className="max-w-[840px]">
         <FormField
           control={form.control}
-          name="mobileBanner"
+          name={filedName}
           render={({ field }) => (
             <FormItem className="mb-6">
-              <FormLabel className="!text-inherit">
-                1. 移动端广告横幅：
-              </FormLabel>
               <FormControl>
                 <ImageUploader
                   defaultImageUrl={field.value}
                   onUploadSuccess={(url) => field.onChange(url)}
                 />
               </FormControl>
+              <FormMessage />
               <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
                 <span>当前图片：</span>
-                {clientConfig.mobileBanner ? (
+                {configValue ? (
                   <Image
-                    src={clientConfig.mobileBanner}
-                    alt="移动端广告横幅"
-                    width={120}
-                    height={120}
-                  />
-                ) : (
-                  <span>无</span>
-                )}
-              </div>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="pcBanner"
-          render={({ field }) => (
-            <FormItem className="mb-8">
-              <FormLabel className="!text-inherit">
-                2. 桌面端广告横幅：
-              </FormLabel>
-              <FormControl>
-                <ImageUploader
-                  defaultImageUrl={field.value}
-                  onUploadSuccess={(url) => field.onChange(url)}
-                />
-              </FormControl>
-              <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
-                <span>当前图片：</span>
-                {clientConfig.pcBanner ? (
-                  <Image
-                    src={clientConfig.pcBanner}
-                    alt="桌面端广告横幅"
+                    src={configValue}
+                    alt={
+                      CLIENT_CONFIG_IMAGE_ALT[
+                        filedName as keyof typeof CLIENT_CONFIG_IMAGE_ALT
+                      ]
+                    }
                     width={120}
                     height={120}
                   />

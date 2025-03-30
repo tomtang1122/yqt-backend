@@ -29,5 +29,5 @@ export interface Enterprise extends EnterpriseParams {
 export interface ClientConfig {
   mobileBanner?: string;
   pcBanner?: string;
-  [key: string]: string | undefined;
+  // [key: string]: string | undefined;
 }
