@@ -139,27 +139,31 @@ const splitUpload = async (
   }
 };
 
-interface ImageFile {
+interface AssetsFile {
   file: File;
   preview: string;
+  name: string;
 }
 
-interface ImageUploaderProps {
-  defaultImageUrl?: string;
+interface AssetsUploaderProps {
+  defaultAssetsUrl?: string;
   onUploadSuccess?: (url: string) => void;
+  acceptTypes?: string;
+  title?: string;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
-  defaultImageUrl,
+export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
+  defaultAssetsUrl,
   onUploadSuccess,
+  acceptTypes,
 }) => {
-  const [imageUrl, setImageUrl] = useState<string | undefined>();
-  const [images, setImages] = useState<ImageFile | undefined>();
+  const [assetsUrl, setAssetsUrl] = useState<string | undefined>();
+  const [assets, setAssets] = useState<AssetsFile | undefined>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPending, startTransition] = useTransition();
 
   const reset = () => {
-    setImages(undefined);
+    setAssets(undefined);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -172,21 +176,22 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
 
-    const newImages: ImageFile[] = files.map((file) => ({
+    const newAssets: AssetsFile[] = files.map((file) => ({
       file: file,
       preview: URL.createObjectURL(file),
+      name: file.name,
     }));
 
-    setImages(newImages[0]);
+    setAssets(newAssets[0]);
   };
 
   const handleUpload = () => {
-    if (images?.file) {
+    if (assets?.file) {
       startTransition(async () => {
         try {
-          const { url } = await splitUpload(images.file);
+          const { url } = await splitUpload(assets.file);
           reset();
-          setImageUrl(url);
+          setAssetsUrl(url);
           if (url && onUploadSuccess) {
             onUploadSuccess(url);
           }
@@ -205,23 +210,23 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         type="file"
         ref={fileInputRef}
         className="hidden"
-        accept="image/*"
+        accept={acceptTypes}
         onChange={handleFileChange}
       />
       <div className="flex items-center gap-4">
         <Button
           variant="outline"
           onClick={handleClick}
-          disabled={!!images || !!fileInputRef.current?.value}
+          disabled={!!assets || !!fileInputRef.current?.value}
           type="button"
         >
           <Icons.Upload className="w-4 h-4 mr-2" />
-          选择图片
+          选择资源
         </Button>
         <Button
           variant="outline"
           onClick={handleUpload}
-          disabled={!images}
+          disabled={!assets}
           type="button"
         >
           上传
@@ -233,26 +238,30 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             <Icons.Loader className="w-10 h-10 animate-spin" />
           </div>
         )}
-        {images && !isPending && (
+        {assets && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
             <div className="flex items-center gap-2">
               <span>预览：</span>
-              <Image
-                src={images.preview}
-                alt="上传预览"
-                width={60}
-                height={60}
-              />
+              {assets.name ? (
+                <span>{assets.name}</span>
+              ) : (
+                <Image
+                  src={assets.preview}
+                  alt="上传预览"
+                  width={60}
+                  height={60}
+                />
+              )}
             </div>
             <Button onClick={reset} variant="outline" size="icon" type="button">
               <Icons.Trash className="w-4 h-4" />
             </Button>
           </div>
         )}
-        {(imageUrl || defaultImageUrl) && !isPending && (
+        {(assetsUrl || defaultAssetsUrl) && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2">
             <p className="text-sm text-gray-800 font-bold">
-              图片路径：{imageUrl || defaultImageUrl}
+              资源路径：{assetsUrl || defaultAssetsUrl}
             </p>
           </div>
         )}

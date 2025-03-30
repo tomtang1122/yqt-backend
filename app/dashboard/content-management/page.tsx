@@ -3,6 +3,7 @@ import { ContentBannerImageForm } from "@components/business/ContentBannerImageF
 import { fetchClientConfig } from "@lib/fetchData";
 import { CLIENT_CONFIG_FIELD_NAME } from "@constant/index";
 import { ContentTextForm } from "@components/business/ContentTextForm";
+import { ContentAppFileForm } from "@components/business/ContentAppFileForm";
 
 // 为什么要强行将本页面作为动态：
 //     因为页面的动态获取会依赖cookie中的token，如果作为静态页面，项目会在构建的时候进行网络请求，但是
@@ -31,11 +32,15 @@ export default async function ContentManagementPage() {
         />
       </div>
       <div className="mb-8">
-        <p className="mb-2 text-lg">3. APP下载地址：</p>
+        <p className="mb-2 text-lg">3. APP版本号：</p>
         <ContentTextForm
-          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.APP_DOWNLOAD_URL]}
-          filedName={CLIENT_CONFIG_FIELD_NAME.APP_DOWNLOAD_URL}
+          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.APP_VERSION]}
+          filedName={CLIENT_CONFIG_FIELD_NAME.APP_VERSION}
         />
+      </div>
+      <div className="mb-8">
+        <p className="mb-2 text-lg">4. APP文件：</p>
+        <ContentAppFileForm filedName={CLIENT_CONFIG_FIELD_NAME.APP_FILE} />
       </div>
     </div>
   );

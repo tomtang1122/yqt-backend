@@ -193,7 +193,8 @@ export type ClientConfigState = {
 const clientConfigSchema = z.object({
   mobileBanner: z.string().min(1, { message: "请上传移动端广告横幅" }),
   pcBanner: z.string().min(1, { message: "请上传PC端广告横幅" }),
-  appDownloadUrl: z.string().url({ message: "请输入有效的APP下载地址" }),
+  appFile: z.string().min(1, { message: "请上传APP文件" }),
+  appVersion: z.string().min(1, { message: "APP版本号不能为空" }),
 });
 
 export async function updateClientConfigAction(

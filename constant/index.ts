@@ -27,12 +27,14 @@ export const IM_REQUEST_URL = "https://yunquetai.com/api";
 export const CLIENT_CONFIG_FIELD_NAME: Record<string, keyof ClientConfig> = {
   MOBILE_BANNER: "mobileBanner",
   PC_BANNER: "pcBanner",
-  APP_DOWNLOAD_URL: "appDownloadUrl",
+  APP_VERSION: "appVersion",
+  APP_FILE: "appFile",
 };
 export const CLIENT_CONFIG_PLACEHOLDER: Record<keyof ClientConfig, string> = {
   mobileBanner: "移动端广告横幅",
   pcBanner: "桌面端广告横幅",
-  appDownloadUrl: "请输入APP下载地址",
+  appVersion: "APP版本号,示例:1.0.0",
+  appFile: "",
 };
 
 export const mimeTypesMap: Record<string, string> = {
@@ -87,4 +89,5 @@ export const mimeTypesMap: Record<string, string> = {
   sh: "application/x-sh",
   php: "application/x-httpd-php",
   jar: "application/java-archive",
+  apk: "application/vnd.android.package-archive",
 };

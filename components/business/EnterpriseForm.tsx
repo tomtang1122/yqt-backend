@@ -15,7 +15,7 @@ import { Input } from "@components/ui/input";
 import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
 import Link from "next/link";
-import { ImageUploader } from "@components/business/ImageUploader";
+import { AssetsUploader } from "@components/business/AssetsUploader";
 import { useTransition, useState } from "react";
 import { GlobalLoading } from "@components/business/globalLoading";
 import { Icons } from "@components/ui/icon";
@@ -161,9 +161,10 @@ export const EnterpriseForm = (props: {
             <FormItem className="mb-3">
               <FormLabel className="!text-inherit">企业logo：</FormLabel>
               <FormControl>
-                <ImageUploader
-                  defaultImageUrl={field.value}
+                <AssetsUploader
+                  defaultAssetsUrl={field.value}
                   onUploadSuccess={(url) => field.onChange(url)}
+                  acceptTypes="image/*"
                 />
               </FormControl>
               <FormMessage />

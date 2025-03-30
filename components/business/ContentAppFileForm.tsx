@@ -8,23 +8,17 @@ import {
   FormItem,
   FormMessage,
 } from "@components/ui/form";
-import { Input } from "@components/ui/input";
+import { AssetsUploader } from "@components/business/AssetsUploader";
 import { GlobalLoading } from "@components/business/globalLoading";
 import { ClientConfig } from "@type/common";
-import { CLIENT_CONFIG_PLACEHOLDER } from "@constant/index";
 import { useContentConfig } from "@hooks/use-content-config";
 
-export const ContentTextForm = ({
-  configValue,
+export const ContentAppFileForm = ({
   filedName,
 }: {
-  configValue?: string;
   filedName: keyof ClientConfig;
 }) => {
-  const { isPending, onSubmit, form } = useContentConfig(
-    filedName,
-    configValue || ""
-  );
+  const { isPending, onSubmit, form } = useContentConfig(filedName, "");
 
   return (
     <Form {...form}>
@@ -36,9 +30,10 @@ export const ContentTextForm = ({
           render={({ field }) => (
             <FormItem className="mb-6">
               <FormControl>
-                <Input
-                  placeholder={CLIENT_CONFIG_PLACEHOLDER[filedName]}
-                  {...field}
+                <AssetsUploader
+                  defaultAssetsUrl={field.value}
+                  onUploadSuccess={(url) => field.onChange(url)}
+                  acceptTypes=".apk"
                 />
               </FormControl>
               <FormMessage />
