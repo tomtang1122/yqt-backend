@@ -23,7 +23,7 @@ const splitUpload = async (
 ): Promise<{ url?: string; error?: Error }> => {
   try {
     const imUserID = await getCookieValue("im-user-id");
-    const fileName = `${imUserID}/${file.name}`;
+    const fileName = `${imUserID}/${Date.now().toString()}_${file.name}`;
     const contentType = getMimeType(file.name);
     const { size: partSize } = await getUploadPartsize(file.size);
     const chunks = Math.ceil(file.size / partSize);
