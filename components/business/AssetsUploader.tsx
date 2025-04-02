@@ -242,16 +242,12 @@ export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
           <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
             <div className="flex items-center gap-2">
               <span>预览：</span>
-              {assets.name ? (
-                <span>{assets.name}</span>
-              ) : (
-                <Image
-                  src={assets.preview}
-                  alt="上传预览"
-                  width={60}
-                  height={60}
-                />
-              )}
+              <Image
+                src={assets.preview}
+                alt="上传预览"
+                width={60}
+                height={60}
+              />
             </div>
             <Button onClick={reset} variant="outline" size="icon" type="button">
               <Icons.Trash className="w-4 h-4" />
