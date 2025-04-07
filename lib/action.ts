@@ -108,13 +108,17 @@ const enterpriseFormSchema = z.object({
   name: z.string().min(1, { message: "企业名称不能为空" }),
   website: z.string().url({ message: "请输入有效的网址" }),
   address: z.string().min(1, { message: "企业地址不能为空" }),
-  phoneNumber: z
-    .string()
-    .regex(
-      /^((\+86)|(86))?(1[3-9]\d{9}|0\d{2,3}-?[1-9]\d{6,7})$/,
-      "请输入有效的电话号码"
-    ),
-  email: z.string().email({ message: "请输入有效的邮箱地址" }),
+  phoneNumber: z.string().refine(
+    (val) => {
+      if (!val) return true;
+      return /^((\+86)|(86))?(1[3-9]\d{9}|0\d{2,3}-?[1-9]\d{6,7})$/.test(val);
+    },
+    { message: "请输入有效的电话号码" }
+  ),
+  email: z.union([
+    z.string().email({ message: "请输入有效的邮箱地址" }),
+    z.string().length(0),
+  ]),
   tags: z.array(z.string()).min(1, { message: "至少添加一个标签" }),
   isEligibleForCashback: z.boolean().default(false).optional(),
 });
