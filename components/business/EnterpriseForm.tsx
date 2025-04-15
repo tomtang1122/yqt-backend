@@ -11,6 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@components/ui/form";
+import { Textarea } from "@components/ui/textarea";
 import { Input } from "@components/ui/input";
 import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
@@ -40,6 +41,8 @@ export const EnterpriseForm = (props: {
       website: "",
       address: "",
       phoneNumber: "",
+      invoice: "",
+      remark: "",
       email: "",
       tags: [],
       isEligibleForCashback: false,
@@ -149,6 +152,36 @@ export const EnterpriseForm = (props: {
               <FormLabel className="!text-inherit">企业电话：</FormLabel>
               <FormControl>
                 <Input placeholder="请输入企业电话" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="invoice"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业发票：</FormLabel>
+              <FormControl>
+                <Textarea rows={3} placeholder="请输入企业发票" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="remark"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel className="!text-inherit">企业备注：</FormLabel>
+              <FormControl>
+                <Textarea
+                  rows={3}
+                  placeholder="请输入企业备注信息"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

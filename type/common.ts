@@ -18,6 +18,8 @@ export interface EnterpriseParams {
   address?: string;
   phoneNumber?: string;
   email?: string;
+  invoice?: string;
+  remark?: string;
   isEligibleForCashback?: boolean;
 }
 
