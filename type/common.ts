@@ -33,6 +33,7 @@ export interface ClientConfig {
   pcBanner?: string;
   appFile?: string;
   appVersion?: string;
-  bankQRCode?: string;
+  mobileBankQRCode?: string;
+  pcBankQRCode?: string;
   // [key: string]: string | undefined;
 }

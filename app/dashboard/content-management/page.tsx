@@ -32,21 +32,28 @@ export default async function ContentManagementPage() {
         />
       </div>
       <div className="mb-8">
-        <p className="mb-2 text-lg">3. 银行二维码：</p>
+        <p className="mb-2 text-lg">3. 移动端银行二维码：</p>
         <ContentBannerImageForm
-          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.BANK_QR_CODE]}
-          filedName={CLIENT_CONFIG_FIELD_NAME.BANK_QR_CODE}
+          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.MOBILE_BANK_QR_CODE]}
+          filedName={CLIENT_CONFIG_FIELD_NAME.MOBILE_BANK_QR_CODE}
         />
       </div>
       <div className="mb-8">
-        <p className="mb-2 text-lg">4. APP版本号：</p>
+        <p className="mb-2 text-lg">4. 桌面端银行二维码：</p>
+        <ContentBannerImageForm
+          configValue={config?.[CLIENT_CONFIG_FIELD_NAME.PC_BANK_QR_CODE]}
+          filedName={CLIENT_CONFIG_FIELD_NAME.PC_BANK_QR_CODE}
+        />
+      </div>
+      <div className="mb-8">
+        <p className="mb-2 text-lg">5. APP版本号：</p>
         <ContentTextForm
           configValue={config?.[CLIENT_CONFIG_FIELD_NAME.APP_VERSION]}
           filedName={CLIENT_CONFIG_FIELD_NAME.APP_VERSION}
         />
       </div>
       <div className="mb-8">
-        <p className="mb-2 text-lg">5. APP文件：</p>
+        <p className="mb-2 text-lg">6. APP文件：</p>
         <ContentAppFileForm filedName={CLIENT_CONFIG_FIELD_NAME.APP_FILE} />
       </div>
     </div>
