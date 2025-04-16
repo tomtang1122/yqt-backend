@@ -25,7 +25,7 @@ export default async function ContentManagementPage() {
         />
       </div>
       <div className="mb-8">
-        <p className="mb-2 text-lg">2. PC端广告横幅：</p>
+        <p className="mb-2 text-lg">2. 桌面端广告横幅：</p>
         <ContentBannerImageForm
           configValue={config?.[CLIENT_CONFIG_FIELD_NAME.PC_BANNER]}
           filedName={CLIENT_CONFIG_FIELD_NAME.PC_BANNER}
