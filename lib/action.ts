@@ -201,6 +201,7 @@ const clientConfigSchema = z.object({
   pcBanner: z.string().min(1, { message: "请上传PC端广告横幅" }),
   appFile: z.string().min(1, { message: "请上传APP文件" }),
   appVersion: z.string().min(1, { message: "APP版本号不能为空" }),
+  bankQRCode: z.string().min(1, { message: "请上传银行二维码" }),
 });
 
 export async function updateClientConfigAction(

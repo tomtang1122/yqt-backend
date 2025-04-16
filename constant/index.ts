@@ -29,12 +29,14 @@ export const CLIENT_CONFIG_FIELD_NAME: Record<string, keyof ClientConfig> = {
   PC_BANNER: "pcBanner",
   APP_VERSION: "appVersion",
   APP_FILE: "appFile",
+  BANK_QR_CODE: "bankQRCode",
 };
 export const CLIENT_CONFIG_PLACEHOLDER: Record<keyof ClientConfig, string> = {
   mobileBanner: "移动端广告横幅",
   pcBanner: "桌面端广告横幅",
   appVersion: "APP版本号,示例:1.0.0",
   appFile: "",
+  bankQRCode: "银行二维码",
 };
 
 export const mimeTypesMap: Record<string, string> = {
