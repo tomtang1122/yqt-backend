@@ -12,6 +12,7 @@ import {
   Upload,
   Loader,
   BookA,
+  Download,
 } from "lucide-react";
 
 export const Icons = {
@@ -28,4 +29,5 @@ export const Icons = {
   Upload,
   Loader,
   BookA,
+  Download,
 };

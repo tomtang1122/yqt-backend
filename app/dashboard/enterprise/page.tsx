@@ -5,6 +5,7 @@ import { Button } from "@components/ui/button";
 import { Icons } from "@components/ui/icon";
 import Link from "next/link";
 import { SearchEnterprise } from "@components/business/SearchEnterprise";
+import { ExportEnterpriseToExcel } from "@components/business/ExportEnterpriseToExcel";
 import { Metadata } from "next";
 
 export default async function EnterpriseManagePage(props: {
@@ -22,12 +23,15 @@ export default async function EnterpriseManagePage(props: {
       <h1 className="text-2xl font-bold">企业列表</h1>
       <div className="flex items-center justify-between my-6 gap-4">
         <SearchEnterprise />
-        <Button asChild>
-          <Link href="/dashboard/enterprise/create">
-            <Icons.Plus />
-            创建企业
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild>
+            <Link href="/dashboard/enterprise/create">
+              <Icons.Plus />
+              创建企业
+            </Link>
+          </Button>
+          <ExportEnterpriseToExcel />
+        </div>
       </div>
 
       <Suspense

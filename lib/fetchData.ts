@@ -30,6 +30,19 @@ export async function fetchEnterprise(
   }
 }
 
+export async function fetchAllEnterprise(): Promise<EnterpriseResponse> {
+  try {
+    const { data: { data } = {} } = await request.post<
+      Response<EnterpriseResponse>
+    >(QUERY_ENTERPRISE_REQUEST_URL, {
+      pagination: { pageNumber: 1, showNumber: 100000 },
+    });
+    return data || { total: 0, enterprises: [] };
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function fetchEnterpriseById(
   id: string
 ): Promise<Enterprise | undefined> {
