@@ -17,7 +17,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@components/ui/pagination";
-import { Avatar, AvatarImage, AvatarFallback } from "@components/ui/avatar";
+import Image from "next/image";
 import { DeleteEnterprise } from "@components/business/DeleteEnterprise";
 
 export async function EnterpriseList({
@@ -54,12 +54,14 @@ export async function EnterpriseList({
             <TableRow key={enterprise.enterpriseID}>
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>
-                <Avatar>
-                  {enterprise.logo && (
-                    <AvatarImage src={enterprise.logo} alt="企业 logo" />
-                  )}
-                  <AvatarFallback>LG</AvatarFallback>
-                </Avatar>
+                {enterprise.logo && (
+                  <Image
+                    width={120}
+                    height={120}
+                    src={enterprise.logo}
+                    alt="企业 logo"
+                  />
+                )}
               </TableCell>
               <TableCell>{enterprise.name}</TableCell>
               <TableCell>{enterprise.website}</TableCell>
