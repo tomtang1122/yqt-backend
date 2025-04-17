@@ -150,12 +150,14 @@ interface AssetsUploaderProps {
   onUploadSuccess?: (url: string) => void;
   acceptTypes?: string;
   title?: string;
+  isImage?: boolean;
 }
 
 export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
   defaultAssetsUrl,
   onUploadSuccess,
   acceptTypes,
+  isImage = true,
 }) => {
   const [assetsUrl, setAssetsUrl] = useState<string | undefined>();
   const [assets, setAssets] = useState<AssetsFile | undefined>();
@@ -241,13 +243,21 @@ export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
         {assets && !isPending && (
           <div className="flex items-center gap-2 border rounded-md p-2 justify-between">
             <div className="flex items-center gap-2">
-              <span>预览：</span>
-              <Image
-                src={assets.preview}
-                alt="上传预览"
-                width={60}
-                height={60}
-              />
+              {isImage ? (
+                <>
+                  <span>预览：</span>
+                  <Image
+                    src={assets.preview}
+                    alt="上传预览"
+                    width={60}
+                    height={60}
+                  />
+                </>
+              ) : (
+                <p>
+                  文件名称：<span className="font-bold">{assets.name}</span>
+                </p>
+              )}
             </div>
             <Button onClick={reset} variant="outline" size="icon" type="button">
               <Icons.Trash className="w-4 h-4" />

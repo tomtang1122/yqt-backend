@@ -34,6 +34,7 @@ export const ContentAppFileForm = ({
                   defaultAssetsUrl={field.value}
                   onUploadSuccess={(url) => field.onChange(url)}
                   acceptTypes=".apk"
+                  isImage={false}
                 />
               </FormControl>
               <FormMessage />
