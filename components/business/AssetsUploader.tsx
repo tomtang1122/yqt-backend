@@ -166,6 +166,8 @@ export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
 
   const reset = () => {
     setAssets(undefined);
+    setAssetsUrl(undefined);
+    onUploadSuccess?.("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -265,10 +267,13 @@ export const AssetsUploader: React.FC<AssetsUploaderProps> = ({
           </div>
         )}
         {(assetsUrl || defaultAssetsUrl) && !isPending && (
-          <div className="flex items-center gap-2 border rounded-md p-2">
+          <div className="flex items-center justify-between gap-2 border rounded-md p-2">
             <p className="text-sm text-gray-800 font-bold">
               资源路径：{assetsUrl || defaultAssetsUrl}
             </p>
+            <Button onClick={reset} variant="outline" size="icon" type="button">
+              <Icons.Trash className="w-4 h-4" />
+            </Button>
           </div>
         )}
       </div>
