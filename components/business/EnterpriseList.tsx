@@ -34,7 +34,7 @@ export async function EnterpriseList({
   const totalPage = Math.ceil(total / MAX_ENTERPRISE_PER_PAGE);
 
   return (
-    <div>
+    <div className="min-w-[1280px]">
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-50">
