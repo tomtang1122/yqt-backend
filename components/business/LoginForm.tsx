@@ -15,6 +15,7 @@ import {
 import { Input } from "@components/ui/input";
 import { GlobalLoading } from "@components/business/globalLoading";
 import type { LoginFormParams } from "@type/common";
+import { md5 } from "js-md5";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -41,7 +42,10 @@ export const LoginForm = () => {
           onSubmit={form.handleSubmit((data) => {
             startTransition(async () => {
               try {
-                const result = await loginAction(data);
+                const result = await loginAction({
+                  ...data,
+                  password: md5(data.password),
+                });
                 if (result?.error) {
                   Object.entries(result.error).forEach(([key, value]) => {
                     form.setError(key as keyof LoginFormParams, {

@@ -19,7 +19,6 @@ import type {
   ClientConfig,
   LoginFormParams,
 } from "@type/common";
-import { md5 } from "js-md5";
 
 type LoginResponse = Response<{
   adminAccount?: string;
@@ -62,7 +61,7 @@ export async function loginAction(
       LOGIN_REQUEST_URL,
       {
         account: username,
-        password: md5(password),
+        password: password,
       }
     );
 
