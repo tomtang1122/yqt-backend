@@ -106,7 +106,7 @@ const enterpriseFormSchema = z.object({
   logo: z.string().min(1, { message: "请上传企业logo" }),
   name: z.string().min(1, { message: "企业名称不能为空" }),
   website: z.string().url({ message: "请输入有效的网址" }),
-  address: z.string().min(1, { message: "企业地址不能为空" }),
+  address: z.string().default("").optional(),
   phoneNumber: z.string().refine(
     (val) => {
       if (!val) return true;
