@@ -16,6 +16,7 @@ import { RECAPTCHA_ERROR } from "@constant/index";
 import type {
   Response,
   EnterpriseParams,
+  EnterpriseExtraRequestParams,
   ClientConfig,
   LoginFormParams,
 } from "@type/common";
@@ -119,9 +120,11 @@ const enterpriseFormSchema = z.object({
     z.string().length(0),
   ]),
   tags: z.array(z.string()).min(1, { message: "至少添加一个标签" }),
+  tagsTypes: z.array(z.number()).nullish(),
   isEligibleForCashback: z.boolean().default(false).optional(),
   invoice: z.string().default("").optional(),
   remark: z.string().default("").optional(),
+  contacts: z.array(z.string()).nullish(),
 });
 
 export async function createEnterpriseAction(
@@ -151,7 +154,7 @@ export async function createEnterpriseAction(
 
 export async function updateEnterpriseAction(
   enterpriseID: string,
-  formData: EnterpriseParams
+  formData: EnterpriseParams & EnterpriseExtraRequestParams
 ): Promise<EnterpriseFormState | undefined> {
   const validatedFields = enterpriseFormSchema.safeParse(formData);
 
@@ -161,11 +164,12 @@ export async function updateEnterpriseAction(
     };
   }
 
+  const contactsLength = validatedFields.data?.contacts?.length ?? 0;
   const formDataToSend = validatedFields.data;
   try {
     await request.post<Response<EnterpriseParams>>(
       UPDATE_ENTERPRISE_REQUEST_URL,
-      { enterpriseID, ...formDataToSend }
+      { enterpriseID, ...formDataToSend, clearContacts: contactsLength === 0 }
     );
   } catch (error) {
     throw error;

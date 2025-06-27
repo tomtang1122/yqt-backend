@@ -41,6 +41,8 @@ export const CLIENT_CONFIG_PLACEHOLDER: Record<keyof ClientConfig, string> = {
   pcBankQRCode: "桌面端银行二维码",
 };
 
+export const TAG_TYPES = ["企业级", "平台级"];
+
 export const mimeTypesMap: Record<string, string> = {
   txt: "text/plain",
   html: "text/html",
