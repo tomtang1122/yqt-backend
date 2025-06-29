@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { type EnterpriseFormState } from "@lib/action";
 import { Button } from "@components/ui/button";
 import { useForm, useWatch } from "react-hook-form";
@@ -288,9 +289,19 @@ export const EnterpriseForm = (props: {
                 {field.value?.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-1 bg-[#f5f7fa] px-2 py-1 rounded-md"
+                    className="flex items-center gap-1 bg-[#f2f4f6] px-2 py-1 rounded-md"
                   >
-                    <span>{tag}</span>
+                    <span
+                      className={clsx("px-1.5 py-0.5", {
+                        "text-[#141414] bg-[#f5f7fa]": tagsTypes?.[index] === 0,
+                        "text-[#188038] bg-[#E6F4EA]": tagsTypes?.[index] === 1,
+                        "text-[#1A73E8] bg-[#E8F0FE]": tagsTypes?.[index] === 2,
+                        "text-[#E37400] bg-[#FFF4E5]": tagsTypes?.[index] === 3,
+                        "text-[#9334E6] bg-[#F3E8FD]": tagsTypes?.[index] === 4,
+                      })}
+                    >
+                      {tag}
+                    </span>
                     <Select
                       value={(tagsTypes?.[index] ?? 0).toString()}
                       onValueChange={(value) =>
