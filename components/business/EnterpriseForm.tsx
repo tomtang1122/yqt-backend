@@ -297,7 +297,7 @@ export const EnterpriseForm = (props: {
                         "text-[#188038] bg-[#E6F4EA]": tagsTypes?.[index] === 1,
                         "text-[#1A73E8] bg-[#E8F0FE]": tagsTypes?.[index] === 2,
                         "text-[#E37400] bg-[#FFF4E5]": tagsTypes?.[index] === 3,
-                        "text-[#00D7EC] bg-[#E6FAFC]": tagsTypes?.[index] === 4,
+                        "text-[#A21CAF] bg-[#FBE4FB]": tagsTypes?.[index] === 4,
                       })}
                     >
                       {tag}
