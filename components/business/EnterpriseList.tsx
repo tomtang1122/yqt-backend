@@ -45,7 +45,6 @@ export async function EnterpriseList({
             <TableHead>企业地址</TableHead>
             <TableHead>企业邮箱</TableHead>
             <TableHead>企业电话</TableHead>
-            <TableHead>支持返现</TableHead>
             <TableHead className="text-right">操作</TableHead>
           </TableRow>
         </TableHeader>
@@ -68,9 +67,6 @@ export async function EnterpriseList({
               <TableCell>{enterprise.address}</TableCell>
               <TableCell>{enterprise.email}</TableCell>
               <TableCell>{enterprise.phoneNumber}</TableCell>
-              <TableCell>
-                {enterprise.isEligibleForCashback ? "是" : "否"}
-              </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
                   <Button variant="ghost" size="icon">

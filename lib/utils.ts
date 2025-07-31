@@ -42,7 +42,6 @@ export const exportToExcel = (enterprises: Enterprise[]) => {
     企业邮箱: enterprise.email,
     企业电话: enterprise.phoneNumber,
     企业标签: enterprise.tags?.join(",  "),
-    支持返现: enterprise.isEligibleForCashback ? "是" : "否",
     企业发票: enterprise.invoice,
     企业备注: enterprise.remark,
   }));
@@ -58,7 +57,6 @@ export const exportToExcel = (enterprises: Enterprise[]) => {
     { wch: 30 },
     { wch: 15 },
     { wch: 30 },
-    { wch: 4 },
     { wch: 100 },
     { wch: 100 },
   ];

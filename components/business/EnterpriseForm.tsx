@@ -21,7 +21,6 @@ import {
 } from "@components/ui/select";
 import { Textarea } from "@components/ui/textarea";
 import { Input } from "@components/ui/input";
-import { Switch } from "@components/ui/switch";
 import { EnterpriseParams } from "@type/common";
 import Link from "next/link";
 import { AssetsUploader } from "@components/business/AssetsUploader";
@@ -57,7 +56,6 @@ export const EnterpriseForm = (props: {
       email: "",
       tags: [],
       tagsTypes: [],
-      isEligibleForCashback: false,
       contacts: [],
     },
   });
@@ -297,7 +295,7 @@ export const EnterpriseForm = (props: {
                         "text-[#188038] bg-[#E6F4EA]": tagsTypes?.[index] === 1,
                         "text-[#1A73E8] bg-[#E8F0FE]": tagsTypes?.[index] === 2,
                         "text-[#E37400] bg-[#FFF4E5]": tagsTypes?.[index] === 3,
-                        "text-[#A21CAF] bg-[#FBE4FB]": tagsTypes?.[index] === 4,
+                        "text-[#BE123C] bg-[#FFE4E6]": tagsTypes?.[index] === 4,
                       })}
                     >
                       {tag}
@@ -390,21 +388,6 @@ export const EnterpriseForm = (props: {
                 ))}
               </div>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="isEligibleForCashback"
-          render={({ field }) => (
-            <FormItem className="mb-8">
-              <FormLabel className="!text-inherit">是否支持返现：</FormLabel>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
             </FormItem>
           )}
         />

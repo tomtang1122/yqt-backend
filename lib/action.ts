@@ -121,7 +121,6 @@ const enterpriseFormSchema = z.object({
   ]),
   tags: z.array(z.string()).min(1, { message: "至少添加一个标签" }),
   tagsTypes: z.array(z.number()).nullish(),
-  isEligibleForCashback: z.boolean().default(false).optional(),
   invoice: z.string().default("").optional(),
   remark: z.string().default("").optional(),
   contacts: z.array(z.string()).nullish(),
