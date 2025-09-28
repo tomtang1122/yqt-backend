@@ -13,6 +13,8 @@ import {
   SET_CLIENT_CONFIG_URL,
   DELETE_PROCUREMENT_REQUEST_URL,
   DELETE_REBATE_REQUEST_URL,
+  UPDATE_PROCUREMENT_REQUEST_URL,
+  UPDATE_REBATE_REQUEST_URL,
 } from "./request";
 import { RECAPTCHA_ERROR } from "@constant/index";
 import type {
@@ -256,6 +258,32 @@ export async function deleteRebateAction(orderID?: string) {
   try {
     await request.post<Response<undefined>>(DELETE_REBATE_REQUEST_URL, {
       orderID,
+    });
+  } catch (error) {
+    throw error;
+  }
+
+  revalidatePath("/dashboard/finance/rebate");
+}
+
+export async function updateProcurementStatusAction(orderID: string, status: number) {
+  try {
+    await request.post<Response<undefined>>(UPDATE_PROCUREMENT_REQUEST_URL, {
+      orderID,
+      status,
+    });
+  } catch (error) {
+    throw error;
+  }
+
+  revalidatePath("/dashboard/finance/procurement");
+}
+
+export async function updateRebateStatusAction(orderID: string, status: number) {
+  try {
+    await request.post<Response<undefined>>(UPDATE_REBATE_REQUEST_URL, {
+      orderID,
+      status,
     });
   } catch (error) {
     throw error;

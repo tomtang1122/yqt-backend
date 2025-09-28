@@ -19,6 +19,10 @@ import {
   TableRow,
 } from "@components/ui/table";
 import { fetchProcurementById, fetchRebateById } from "@lib/fetchData";
+import {
+  updateProcurementStatusAction,
+  updateRebateStatusAction,
+} from "@lib/action";
 
 interface ViewDetailButtonProps {
   orderID: string;
@@ -102,9 +106,22 @@ export function ViewDetailButton({
   const handleClick = () => {
     startTransition(async () => {
       try {
+        // 1. 获取详情数据
         const data = await fetchDetail(orderID);
         setDetail(data);
         setIsOpen(true);
+
+        // 2. 更新状态为已读 (status: 1)
+        try {
+          if (type === "procurement") {
+            await updateProcurementStatusAction(orderID, 1);
+          } else {
+            await updateRebateStatusAction(orderID, 1);
+          }
+        } catch (statusError) {
+          // 状态更新失败不影响详情显示，只记录错误
+          console.error("Failed to update status:", statusError);
+        }
       } catch (error) {
         console.error("Failed to fetch detail:", error);
       }
@@ -124,9 +141,9 @@ export function ViewDetailButton({
       <Button variant="ghost" size="icon" onClick={handleClick}>
         <Icons.Eye className="w-4 h-4" />
       </Button>
-      
+
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
