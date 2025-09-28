@@ -14,6 +14,7 @@ import {
   BookA,
   Download,
   ListOrdered,
+  Eye,
 } from "lucide-react";
 
 export const Icons = {
@@ -32,4 +33,5 @@ export const Icons = {
   BookA,
   Download,
   ListOrdered,
+  Eye,
 };

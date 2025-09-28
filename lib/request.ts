@@ -15,6 +15,8 @@ export const QUERY_PROCUREMENT_REQUEST_URL = "/procurement/query";
 export const DELETE_PROCUREMENT_REQUEST_URL = "/procurement/delete";
 export const QUERY_REBATE_REQUEST_URL = "/rebate/query";
 export const DELETE_REBATE_REQUEST_URL = "/rebate/delete";
+export const GET_PROCUREMENT_REQUEST_URL = "/procurement/get";
+export const GET_REBATE_REQUEST_URL = "/rebate/get";
 
 // 创建通用请求实例
 export const request = axios.create({

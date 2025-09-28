@@ -15,6 +15,7 @@ import {
   PaginationPrevious,
 } from "@components/ui/pagination";
 import { DeleteButton } from "@components/business/DeleteButton";
+import { ViewDetailButton } from "@components/business/ViewDetailButton";
 import { deleteProcurementAction } from "@lib/action";
 
 export async function ProcurementList({
@@ -47,6 +48,11 @@ export async function ProcurementList({
               <TableCell>{procurement.orderID}</TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
+                  <ViewDetailButton
+                    orderID={procurement.orderID}
+                    title="额度工单详情"
+                    type="procurement"
+                  />
                   <DeleteButton
                     id={procurement.orderID}
                     onDelete={deleteProcurementAction}

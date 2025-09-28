@@ -5,6 +5,8 @@ import {
   GET_CLIENT_CONFIG_URL,
   QUERY_PROCUREMENT_REQUEST_URL,
   QUERY_REBATE_REQUEST_URL,
+  GET_PROCUREMENT_REQUEST_URL,
+  GET_REBATE_REQUEST_URL,
 } from "./request";
 import { Response, Enterprise, ClientConfig, Procurement, Rebate } from "@type/index";
 
@@ -136,6 +138,36 @@ export async function fetchRebate(
       endCreateTime: params.endCreateTime,
     });
     return data || { total: 0, rebateOrders: [] };
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchProcurementById(
+  orderID: string
+): Promise<Procurement | undefined> {
+  try {
+    const { data: { data } = {} } = await request.post<
+      Response<{ procurementOrder?: Procurement }>
+    >(GET_PROCUREMENT_REQUEST_URL, {
+      orderID,
+    });
+    return data?.procurementOrder;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchRebateById(
+  orderID: string
+): Promise<Rebate | undefined> {
+  try {
+    const { data: { data } = {} } = await request.post<
+      Response<{ rebateOrder?: Rebate }>
+    >(GET_REBATE_REQUEST_URL, {
+      orderID,
+    });
+    return data?.rebateOrder;
   } catch (error) {
     throw error;
   }

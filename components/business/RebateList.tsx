@@ -15,6 +15,7 @@ import {
   PaginationPrevious,
 } from "@components/ui/pagination";
 import { DeleteButton } from "@components/business/DeleteButton";
+import { ViewDetailButton } from "@components/business/ViewDetailButton";
 import { deleteRebateAction } from "@lib/action";
 
 export async function RebateList({
@@ -47,6 +48,11 @@ export async function RebateList({
               <TableCell>{rebate.orderID}</TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
+                  <ViewDetailButton
+                    orderID={rebate.orderID}
+                    title="贴息工单详情"
+                    type="rebate"
+                  />
                   <DeleteButton
                     id={rebate.orderID}
                     onDelete={deleteRebateAction}
