@@ -1,4 +1,4 @@
-import { fetchEnterprise, MAX_ENTERPRISE_PER_PAGE } from "@lib/fetchData";
+import { fetchEnterprise, MAX_ITEMS_PER_PAGE } from "@lib/fetchData";
 import {
   Table,
   TableBody,
@@ -18,7 +18,8 @@ import {
   PaginationPrevious,
 } from "@components/ui/pagination";
 import Image from "next/image";
-import { DeleteEnterprise } from "@components/business/DeleteEnterprise";
+import { DeleteButton } from "@components/business/DeleteButton";
+import { deleteEnterpriseAction } from "@lib/action";
 
 export async function EnterpriseList({
   currentPage,
@@ -31,7 +32,7 @@ export async function EnterpriseList({
     currentPage,
     query
   );
-  const totalPage = Math.ceil(total / MAX_ENTERPRISE_PER_PAGE);
+  const totalPage = Math.ceil(total / MAX_ITEMS_PER_PAGE);
 
   return (
     <div className="min-w-[1280px]">
@@ -76,7 +77,12 @@ export async function EnterpriseList({
                       <Icons.Pencil className="w-4 h-4" />
                     </Link>
                   </Button>
-                  <DeleteEnterprise enterpriseID={enterprise.enterpriseID} />
+                  <DeleteButton
+                    id={enterprise.enterpriseID}
+                    onDelete={deleteEnterpriseAction}
+                    title="是否确定删除当前企业"
+                    description="删除后，当前企业将无法使用，请谨慎操作。"
+                  />
                 </div>
               </TableCell>
             </TableRow>

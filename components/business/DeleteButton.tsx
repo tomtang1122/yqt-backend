@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { deleteEnterpriseAction } from "@lib/action";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,13 +16,25 @@ import { GlobalLoading } from "@components/business/globalLoading";
 import { Icons } from "@components/ui/icon";
 import { Button } from "@components/ui/button";
 
-export function DeleteEnterprise({ enterpriseID }: { enterpriseID?: string }) {
+interface DeleteButtonProps {
+  id?: string;
+  onDelete: (id: string) => Promise<void>;
+  title: string;
+  description: string;
+}
+
+export function DeleteButton({ 
+  id, 
+  onDelete, 
+  title, 
+  description 
+}: DeleteButtonProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
-    if (!enterpriseID) return;
+    if (!id) return;
     startTransition(async () => {
-      await deleteEnterpriseAction(enterpriseID);
+      await onDelete(id);
     });
   };
 
@@ -38,9 +49,9 @@ export function DeleteEnterprise({ enterpriseID }: { enterpriseID?: string }) {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>是否确定删除当前企业</AlertDialogTitle>
+            <AlertDialogTitle>{title}</AlertDialogTitle>
             <AlertDialogDescription>
-              删除后，当前企业将无法使用，请谨慎操作。
+              {description}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

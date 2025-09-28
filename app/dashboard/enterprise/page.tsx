@@ -4,7 +4,7 @@ import { Skeleton } from "@components/ui/skeleton";
 import { Button } from "@components/ui/button";
 import { Icons } from "@components/ui/icon";
 import Link from "next/link";
-import { SearchEnterprise } from "@components/business/SearchEnterprise";
+import { SearchInput } from "@components/business/SearchInput";
 import { ExportEnterpriseToExcel } from "@components/business/ExportEnterpriseToExcel";
 import { Metadata } from "next";
 
@@ -22,7 +22,7 @@ export default async function EnterpriseManagePage(props: {
     <div className="p-4">
       <h1 className="text-2xl font-bold">企业列表</h1>
       <div className="flex items-center justify-between my-6 gap-4">
-        <SearchEnterprise />
+        <SearchInput placeholder="搜索企业" />
         <div className="flex items-center gap-2">
           <Button asChild>
             <Link href="/dashboard/enterprise/create">

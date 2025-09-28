@@ -6,7 +6,11 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Icons } from "@components/ui/icon";
 import { useDebouncedCallback } from "use-debounce";
 
-export function SearchEnterprise() {
+interface SearchInputProps {
+  placeholder: string;
+}
+
+export function SearchInput({ placeholder }: SearchInputProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -28,7 +32,7 @@ export function SearchEnterprise() {
       </Label>
       <Input
         className="pl-8"
-        placeholder="搜索企业"
+        placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
         }}

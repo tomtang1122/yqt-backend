@@ -11,6 +11,8 @@ import {
   DELETE_ENTERPRISE_REQUEST_URL,
   UPDATE_ENTERPRISE_REQUEST_URL,
   SET_CLIENT_CONFIG_URL,
+  DELETE_PROCUREMENT_REQUEST_URL,
+  DELETE_REBATE_REQUEST_URL,
 } from "./request";
 import { RECAPTCHA_ERROR } from "@constant/index";
 import type {
@@ -234,4 +236,30 @@ export async function updateClientConfigAction(
   }
 
   revalidatePath("/dashboard/content-management");
+}
+
+export async function deleteProcurementAction(orderID?: string) {
+  if (!orderID) return;
+  try {
+    await request.post<Response<undefined>>(DELETE_PROCUREMENT_REQUEST_URL, {
+      orderID,
+    });
+  } catch (error) {
+    throw error;
+  }
+
+  revalidatePath("/dashboard/finance/procurement");
+}
+
+export async function deleteRebateAction(orderID?: string) {
+  if (!orderID) return;
+  try {
+    await request.post<Response<undefined>>(DELETE_REBATE_REQUEST_URL, {
+      orderID,
+    });
+  } catch (error) {
+    throw error;
+  }
+
+  revalidatePath("/dashboard/finance/rebate");
 }
