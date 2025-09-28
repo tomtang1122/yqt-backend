@@ -7,6 +7,7 @@ import { GlobalLoading } from "@components/business/globalLoading";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@components/ui/dialog";
@@ -94,6 +95,7 @@ export function ViewDetailButton({
   const [isOpen, setIsOpen] = useState(false);
   const [detail, setDetail] = useState<unknown>(null);
   const [isPending, startTransition] = useTransition();
+  const [hasViewed, setHasViewed] = useState(false);
 
   const fetchDetail = async (orderID: string) => {
     if (type === "procurement") {
@@ -110,17 +112,10 @@ export function ViewDetailButton({
         const data = await fetchDetail(orderID);
         setDetail(data);
         setIsOpen(true);
-
-        // 2. 更新状态为已读 (status: 1)
-        try {
-          if (type === "procurement") {
-            await updateProcurementStatusAction(orderID, 1);
-          } else {
-            await updateRebateStatusAction(orderID, 1);
-          }
-        } catch (statusError) {
-          // 状态更新失败不影响详情显示，只记录错误
-          console.error("Failed to update status:", statusError);
+        
+        // 2. 检查状态，只有未读时才标记为已查看
+        if (data && typeof data === 'object' && 'status' in data && data.status === 0) {
+          setHasViewed(true); // 只有未读状态才标记为已查看
         }
       } catch (error) {
         console.error("Failed to fetch detail:", error);
@@ -128,12 +123,28 @@ export function ViewDetailButton({
     });
   };
 
-  // 当Modal关闭时清空数据
+  // 当Modal关闭时清空数据并更新状态
   useEffect(() => {
     if (!isOpen) {
       setDetail(null);
+
+      // 如果已经查看过详情，则更新状态为已读并刷新页面
+      if (hasViewed) {
+        startTransition(async () => {
+          try {
+            if (type === "procurement") {
+              await updateProcurementStatusAction(orderID, 1); // 更新状态并刷新页面
+            } else {
+              await updateRebateStatusAction(orderID, 1); // 更新状态并刷新页面
+            }
+          } catch (statusError) {
+            console.error("Failed to update status:", statusError);
+          }
+        });
+        setHasViewed(false); // 重置标记
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, hasViewed, orderID, type]);
 
   return (
     <>
@@ -146,6 +157,9 @@ export function ViewDetailButton({
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>
+              查看工单详细信息
+            </DialogDescription>
           </DialogHeader>
 
           {Boolean(detail) && (

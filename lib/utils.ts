@@ -9,6 +9,33 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * 构建查询参数字符串
+ * @param params 查询参数对象
+ * @returns 查询参数字符串
+ */
+export function buildQueryString(params: {
+  query?: string;
+  status?: number;
+  page?: number;
+}): string {
+  const urlParams = new URLSearchParams();
+  
+  if (params.query) {
+    urlParams.set("query", params.query);
+  }
+  
+  if (params.status !== undefined) {
+    urlParams.set("status", params.status.toString());
+  }
+  
+  if (params.page && params.page > 1) {
+    urlParams.set("page", params.page.toString());
+  }
+  
+  return urlParams.toString();
+}
+
+/**
  * 将原始图片URL转换为代理URL
  * 例如: ${host}/object/imAdmin/logo.png -> /api/proxy-image/object/imAdmin/logo.png
  * @param url 原始图片URL

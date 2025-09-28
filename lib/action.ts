@@ -266,7 +266,10 @@ export async function deleteRebateAction(orderID?: string) {
   revalidatePath("/dashboard/finance/rebate");
 }
 
-export async function updateProcurementStatusAction(orderID: string, status: number) {
+export async function updateProcurementStatusAction(
+  orderID: string,
+  status: number
+) {
   try {
     await request.post<Response<undefined>>(UPDATE_PROCUREMENT_REQUEST_URL, {
       orderID,
@@ -279,7 +282,10 @@ export async function updateProcurementStatusAction(orderID: string, status: num
   revalidatePath("/dashboard/finance/procurement");
 }
 
-export async function updateRebateStatusAction(orderID: string, status: number) {
+export async function updateRebateStatusAction(
+  orderID: string,
+  status: number
+) {
   try {
     await request.post<Response<undefined>>(UPDATE_REBATE_REQUEST_URL, {
       orderID,

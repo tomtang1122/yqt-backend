@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { fetchProcurement, MAX_ITEMS_PER_PAGE } from "@lib/fetchData";
 import {
   Table,
@@ -17,17 +18,21 @@ import {
 import { DeleteButton } from "@components/business/DeleteButton";
 import { ViewDetailButton } from "@components/business/ViewDetailButton";
 import { deleteProcurementAction } from "@lib/action";
+import { buildQueryString } from "@lib/utils";
 
 export async function ProcurementList({
   currentPage,
   query,
+  status,
 }: {
   currentPage: number;
   query?: string;
+  status?: number;
 }) {
   const { total = 0, procurementOrders = [] } = await fetchProcurement({
     pageNumber: currentPage,
     keyword: query,
+    status,
   });
   const totalPage = Math.ceil(total / MAX_ITEMS_PER_PAGE);
 
@@ -45,7 +50,14 @@ export async function ProcurementList({
           {procurementOrders?.map((procurement, index) => (
             <TableRow key={procurement.orderID}>
               <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>{procurement.orderID}</TableCell>
+              <TableCell
+                className={clsx({
+                  "text-[#1A73E8] font-bold": procurement.status === 0,
+                  "text-gray-600": procurement.status === 1,
+                })}
+              >
+                {procurement.orderID}
+              </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
                   <ViewDetailButton
@@ -73,7 +85,11 @@ export async function ProcurementList({
               className={`${
                 currentPage <= 1 ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/procurement?page=${currentPage - 1}`}
+              href={`/dashboard/finance/procurement?${buildQueryString({
+                query,
+                status,
+                page: currentPage - 1,
+              })}`}
             />
           </PaginationItem>
           <PaginationItem>
@@ -84,7 +100,11 @@ export async function ProcurementList({
               className={`${
                 currentPage >= totalPage ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/procurement?page=${currentPage + 1}`}
+              href={`/dashboard/finance/procurement?${buildQueryString({
+                query,
+                status,
+                page: currentPage + 1,
+              })}`}
             />
           </PaginationItem>
         </PaginationContent>

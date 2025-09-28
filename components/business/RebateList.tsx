@@ -17,17 +17,21 @@ import {
 import { DeleteButton } from "@components/business/DeleteButton";
 import { ViewDetailButton } from "@components/business/ViewDetailButton";
 import { deleteRebateAction } from "@lib/action";
+import { buildQueryString } from "@lib/utils";
 
 export async function RebateList({
   currentPage,
   query,
+  status,
 }: {
   currentPage: number;
   query?: string;
+  status?: number;
 }) {
   const { total = 0, rebateOrders = [] } = await fetchRebate({
     pageNumber: currentPage,
     keyword: query,
+    status,
   });
   const totalPage = Math.ceil(total / MAX_ITEMS_PER_PAGE);
 
@@ -73,7 +77,7 @@ export async function RebateList({
               className={`${
                 currentPage <= 1 ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/rebate?page=${currentPage - 1}`}
+              href={`/dashboard/finance/rebate?${buildQueryString({ query, status, page: currentPage - 1 })}`}
             />
           </PaginationItem>
           <PaginationItem>
@@ -84,7 +88,7 @@ export async function RebateList({
               className={`${
                 currentPage >= totalPage ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/rebate?page=${currentPage + 1}`}
+              href={`/dashboard/finance/rebate?${buildQueryString({ query, status, page: currentPage + 1 })}`}
             />
           </PaginationItem>
         </PaginationContent>

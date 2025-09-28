@@ -20,6 +20,7 @@ import {
 import Image from "next/image";
 import { DeleteButton } from "@components/business/DeleteButton";
 import { deleteEnterpriseAction } from "@lib/action";
+import { buildQueryString } from "@lib/utils";
 
 export async function EnterpriseList({
   currentPage,
@@ -97,7 +98,7 @@ export async function EnterpriseList({
               className={`${
                 currentPage <= 1 ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/enterprise?page=${currentPage - 1}`}
+              href={`/dashboard/enterprise?${buildQueryString({ query, page: currentPage - 1 })}`}
             />
           </PaginationItem>
           <PaginationItem>
@@ -108,7 +109,7 @@ export async function EnterpriseList({
               className={`${
                 currentPage >= totalPage ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/enterprise?page=${currentPage + 1}`}
+              href={`/dashboard/enterprise?${buildQueryString({ query, page: currentPage + 1 })}`}
             />
           </PaginationItem>
         </PaginationContent>
