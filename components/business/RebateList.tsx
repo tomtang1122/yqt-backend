@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { fetchRebate, MAX_ITEMS_PER_PAGE } from "@lib/fetchData";
 import {
   Table,
@@ -49,7 +50,14 @@ export async function RebateList({
           {rebateOrders?.map((rebate, index) => (
             <TableRow key={rebate.orderID}>
               <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>{rebate.orderID}</TableCell>
+              <TableCell
+                className={clsx({
+                  "text-[#1A73E8] font-bold": rebate.status === 0,
+                  "text-gray-600": rebate.status === 1,
+                })}
+              >
+                {rebate.orderID}
+              </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
                   <ViewDetailButton
@@ -77,7 +85,11 @@ export async function RebateList({
               className={`${
                 currentPage <= 1 ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/rebate?${buildQueryString({ query, status, page: currentPage - 1 })}`}
+              href={`/dashboard/finance/rebate?${buildQueryString({
+                query,
+                status,
+                page: currentPage - 1,
+              })}`}
             />
           </PaginationItem>
           <PaginationItem>
@@ -88,7 +100,11 @@ export async function RebateList({
               className={`${
                 currentPage >= totalPage ? "pointer-events-none opacity-50" : ""
               }`}
-              href={`/dashboard/finance/rebate?${buildQueryString({ query, status, page: currentPage + 1 })}`}
+              href={`/dashboard/finance/rebate?${buildQueryString({
+                query,
+                status,
+                page: currentPage + 1,
+              })}`}
             />
           </PaginationItem>
         </PaginationContent>
