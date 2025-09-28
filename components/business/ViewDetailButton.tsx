@@ -47,30 +47,28 @@ const getFieldLabel = (key: string) => {
   const labelMap: Record<string, string> = {
     // 通用字段
     orderID: "工单ID",
-    status: "状态",
-    readAt: "读取时间",
-    processedAt: "处理时间",
+    readAt: "第一次查看时间",
     createTime: "创建时间",
     remark: "备注",
 
     // Procurement 字段
-    vendor: "供应商",
-    integrator: "集成商",
-    endCustomer: "终端客户",
-    purchaseAmount: "采购金额",
+    vendor: "品牌厂商名称",
+    integrator: "集成（代理）商名称",
+    endCustomer: "终端客户名称",
+    purchaseAmount: "采购金额（元）",
     paymentTermDays: "付款期限(天)",
-    originOrgName: "原始组织名称",
+    originOrgName: "业务发起机构",
     contactName: "联系人姓名",
     contactPhone: "联系电话",
     contactEmail: "联系邮箱",
 
     // Rebate 字段
-    procurementOrderID: "采购工单ID",
+    procurementOrderID: "采购订单号",
     contractNumber: "合同编号",
     invoiceAmount: "发票金额",
     invoiceDate: "发票日期",
-    customerName: "客户名称",
-    customerBankAccount: "客户银行账户",
+    customerName: "申请人姓名",
+    customerBankAccount: "申请人银行账户",
   };
   return labelMap[key] || key;
 };
@@ -79,12 +77,12 @@ const getDisplayFields = (data: unknown) => {
   if (!data || typeof data !== "object") return [];
 
   // 显示所有字段，不排除任何字段
-  return Object.entries(data as Record<string, unknown>).map(
-    ([key, value]) => ({
+  return Object.entries(data as Record<string, unknown>)
+    .filter(([key]) => key !== "status" && key !== "processedAt")
+    .map(([key, value]) => ({
       label: getFieldLabel(key),
       value: formatValue(value as string | number, key),
-    })
-  );
+    }));
 };
 
 export function ViewDetailButton({
@@ -112,9 +110,14 @@ export function ViewDetailButton({
         const data = await fetchDetail(orderID);
         setDetail(data);
         setIsOpen(true);
-        
+
         // 2. 检查状态，只有未读时才标记为已查看
-        if (data && typeof data === 'object' && 'status' in data && data.status === 0) {
+        if (
+          data &&
+          typeof data === "object" &&
+          "status" in data &&
+          data.status === 0
+        ) {
           setHasViewed(true); // 只有未读状态才标记为已查看
         }
       } catch (error) {
@@ -125,24 +128,20 @@ export function ViewDetailButton({
 
   // 当Modal关闭时清空数据并更新状态
   useEffect(() => {
-    if (!isOpen) {
-      setDetail(null);
-
-      // 如果已经查看过详情，则更新状态为已读并刷新页面
-      if (hasViewed) {
-        startTransition(async () => {
-          try {
-            if (type === "procurement") {
-              await updateProcurementStatusAction(orderID, 1); // 更新状态并刷新页面
-            } else {
-              await updateRebateStatusAction(orderID, 1); // 更新状态并刷新页面
-            }
-          } catch (statusError) {
-            console.error("Failed to update status:", statusError);
+    // 关闭窗口时，如果已经查看过详情，则更新状态为已读并刷新页面
+    if (!isOpen && hasViewed) {
+      startTransition(async () => {
+        try {
+          if (type === "procurement") {
+            await updateProcurementStatusAction(orderID, 1); // 更新状态并刷新页面
+          } else {
+            await updateRebateStatusAction(orderID, 1); // 更新状态并刷新页面
           }
-        });
-        setHasViewed(false); // 重置标记
-      }
+        } catch (statusError) {
+          console.error("Failed to update status:", statusError);
+        }
+      });
+      setHasViewed(false); // 重置标记
     }
   }, [isOpen, hasViewed, orderID, type]);
 
@@ -157,9 +156,7 @@ export function ViewDetailButton({
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>
-              查看工单详细信息
-            </DialogDescription>
+            <DialogDescription>查看工单详细信息</DialogDescription>
           </DialogHeader>
 
           {Boolean(detail) && (
