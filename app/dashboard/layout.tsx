@@ -11,14 +11,24 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from "@components/ui/sidebar";
 import { Separator } from "@components/ui/separator";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@components/ui/collapsible";
 import { NavTitle } from "@components/business/NavTitle";
 import { items } from "@constant/index";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@assets/logo.png";
 import { Logout } from "@components/business/Logout";
+import { Icons } from "@components/ui/icon";
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -43,12 +53,38 @@ export default async function DashboardLayout({
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                    {item.subItems ? (
+                      <Collapsible>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton className="group">
+                            {item.icon && <item.icon />}
+                            <span>{item.title}</span>
+                            <Icons.ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]:rotate-90" />
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.subItems.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton asChild>
+                                  <Link href={subItem.url!}>
+                                    {subItem.icon && <subItem.icon />}
+                                    <span>{subItem.title}</span>
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    ) : (
+                      <SidebarMenuButton asChild>
+                        <Link href={item.url!}>
+                          {item.icon && <item.icon />}
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    )}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

@@ -10,7 +10,13 @@ import { cn } from "@lib/utils";
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import { Separator } from "@components/ui/separator";
-import { Sheet, SheetContent } from "@components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@components/ui/sheet";
 import { Skeleton } from "@components/ui/skeleton";
 import {
   Tooltip,
@@ -195,6 +201,10 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetHeader className="sr-only">
+            <SheetTitle>Sidebar</SheetTitle>
+            <SheetDescription>Navigation menu</SheetDescription>
+          </SheetHeader>
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"

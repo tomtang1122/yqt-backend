@@ -13,6 +13,7 @@ import {
   Loader,
   BookA,
   Download,
+  ListOrdered,
 } from "lucide-react";
 
 export const Icons = {
@@ -30,4 +31,5 @@ export const Icons = {
   Loader,
   BookA,
   Download,
+  ListOrdered,
 };

@@ -1,7 +1,14 @@
 import { Icons } from "@components/ui/icon";
 import { ClientConfig } from "@type/common";
 
-export const items = [
+interface MenuItem {
+  title: string;
+  url?: string;
+  icon?: React.ComponentType;
+  subItems?: MenuItem[];
+}
+
+export const items: MenuItem[] = [
   {
     title: "信息面板",
     url: "/dashboard",
@@ -16,6 +23,20 @@ export const items = [
     title: "网站内容管理",
     url: "/dashboard/content-management",
     icon: Icons.BookA,
+  },
+  {
+    title: "业务工单",
+    icon: Icons.ListOrdered,
+    subItems: [
+      {
+        title: "额度工单",
+        url: "/dashboard/finance/procurement",
+      },
+      {
+        title: "贴息工单",
+        url: "/dashboard/finance/rebate",
+      },
+    ],
   },
 ];
 
