@@ -22,6 +22,8 @@ export function SearchInput({ placeholder }: SearchInputProps) {
     } else {
       params.delete("query");
     }
+    // 搜索时重置到第一页
+    params.delete("page");
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
