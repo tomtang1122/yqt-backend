@@ -55,7 +55,7 @@ const getFieldLabel = (key: string) => {
     vendor: "品牌厂商名称",
     integrator: "集成（代理）商名称",
     endCustomer: "终端客户名称",
-    purchaseAmount: "采购金额（元）",
+    purchaseAmount: "采购金额（万元）",
     paymentTermDays: "付款期限(天)",
     originOrgName: "业务发起机构",
     contactName: "联系人姓名",
@@ -65,7 +65,7 @@ const getFieldLabel = (key: string) => {
     // Rebate 字段
     procurementOrderID: "采购订单号",
     contractNumber: "合同编号",
-    invoiceAmount: "发票金额",
+    invoiceAmount: "发票金额（万元）",
     invoiceDate: "发票日期",
     customerName: "申请人姓名",
     customerBankAccount: "申请人银行账户",
