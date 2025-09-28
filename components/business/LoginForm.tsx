@@ -14,7 +14,7 @@ import {
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
 import { GlobalLoading } from "@components/business/globalLoading";
-import type { LoginFormParams } from "@type/common";
+import type { LoginFormParams } from "@type/index";
 import { md5 } from "js-md5";
 
 export const LoginForm = () => {
@@ -49,7 +49,7 @@ export const LoginForm = () => {
                 if (result?.error) {
                   Object.entries(result.error).forEach(([key, value]) => {
                     form.setError(key as keyof LoginFormParams, {
-                      message: value[0],
+                      message: value?.[0],
                     });
                   });
                 }

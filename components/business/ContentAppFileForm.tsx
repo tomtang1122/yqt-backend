@@ -10,7 +10,7 @@ import {
 } from "@components/ui/form";
 import { AssetsUploader } from "@components/business/AssetsUploader";
 import { GlobalLoading } from "@components/business/globalLoading";
-import { ClientConfig } from "@type/common";
+import { ClientConfig } from "@type/index";
 import { useContentConfig } from "@hooks/use-content-config";
 
 export const ContentAppFileForm = ({

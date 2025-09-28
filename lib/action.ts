@@ -19,7 +19,7 @@ import type {
   EnterpriseExtraRequestParams,
   ClientConfig,
   LoginFormParams,
-} from "@type/common";
+} from "@type/index";
 
 type LoginResponse = Response<{
   adminAccount?: string;

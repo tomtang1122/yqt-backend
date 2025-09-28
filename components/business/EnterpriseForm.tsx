@@ -21,7 +21,7 @@ import {
 } from "@components/ui/select";
 import { Textarea } from "@components/ui/textarea";
 import { Input } from "@components/ui/input";
-import { EnterpriseParams } from "@type/common";
+import { EnterpriseParams } from "@type/index";
 import Link from "next/link";
 import { AssetsUploader } from "@components/business/AssetsUploader";
 import { useTransition, useState } from "react";

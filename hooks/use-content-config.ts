@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useTransition } from "react";
 import { updateClientConfigAction } from "@lib/action";
-import { ClientConfig } from "@type/common";
+import { ClientConfig } from "@type/index";
 
 export const useContentConfig = (
   filedName: keyof ClientConfig,

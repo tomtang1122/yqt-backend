@@ -4,7 +4,7 @@ import {
   QUERY_ENTERPRISE_REQUEST_URL,
   GET_CLIENT_CONFIG_URL,
 } from "./request";
-import { Response, Enterprise, ClientConfig } from "@type/common";
+import { Response, Enterprise, ClientConfig } from "@type/index";
 
 type EnterpriseResponse = {
   total?: number;

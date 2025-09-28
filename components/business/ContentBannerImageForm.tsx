@@ -11,7 +11,7 @@ import {
 import { AssetsUploader } from "@components/business/AssetsUploader";
 import { GlobalLoading } from "@components/business/globalLoading";
 import Image from "next/image";
-import { ClientConfig } from "@type/common";
+import { ClientConfig } from "@type/index";
 import { CLIENT_CONFIG_PLACEHOLDER } from "@constant/index";
 import { useContentConfig } from "@hooks/use-content-config";
 

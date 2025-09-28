@@ -1,5 +1,5 @@
 import { Icons } from "@components/ui/icon";
-import { ClientConfig } from "@type/common";
+import { ClientConfig } from "@type/index";
 
 interface MenuItem {
   title: string;

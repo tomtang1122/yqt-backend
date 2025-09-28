@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { IM_REQUEST_URL } from "@constant/index";
-import { Enterprise } from "@type/common";
+import { Enterprise } from "@type/index";
 import { utils, writeFile } from "xlsx";
 
 export function cn(...inputs: ClassValue[]) {

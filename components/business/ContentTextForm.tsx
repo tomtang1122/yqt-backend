@@ -10,7 +10,7 @@ import {
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
 import { GlobalLoading } from "@components/business/globalLoading";
-import { ClientConfig } from "@type/common";
+import { ClientConfig } from "@type/index";
 import { CLIENT_CONFIG_PLACEHOLDER } from "@constant/index";
 import { useContentConfig } from "@hooks/use-content-config";
 
