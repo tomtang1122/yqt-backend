@@ -17,21 +17,31 @@ export function buildQueryString(params: {
   query?: string;
   status?: number;
   page?: number;
+  startTime?: number;
+  endTime?: number;
 }): string {
   const urlParams = new URLSearchParams();
-  
+
   if (params.query) {
     urlParams.set("query", params.query);
   }
-  
+
   if (params.status !== undefined) {
     urlParams.set("status", params.status.toString());
   }
-  
+
+  if (params.startTime !== undefined) {
+    urlParams.set("startTime", params.startTime.toString());
+  }
+
+  if (params.endTime !== undefined) {
+    urlParams.set("endTime", params.endTime.toString());
+  }
+
   if (params.page && params.page > 1) {
     urlParams.set("page", params.page.toString());
   }
-  
+
   return urlParams.toString();
 }
 

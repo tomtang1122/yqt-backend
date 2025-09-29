@@ -47,8 +47,8 @@ const getFieldLabel = (key: string) => {
   const labelMap: Record<string, string> = {
     // 通用字段
     orderID: "工单ID",
-    readAt: "第一次查看时间",
-    createTime: "创建时间",
+    readAt: "初次查看日期",
+    createTime: "创建日期",
     remark: "备注",
 
     // Procurement 字段
@@ -112,13 +112,8 @@ export function ViewDetailButton({
         setIsOpen(true);
 
         // 2. 检查状态，只有未读时才标记为已查看
-        if (
-          data &&
-          typeof data === "object" &&
-          "status" in data &&
-          data.status === 0
-        ) {
-          setHasViewed(true); // 只有未读状态才标记为已查看
+        if (data?.status === 0) {
+          setHasViewed(true);
         }
       } catch (error) {
         console.error("Failed to fetch detail:", error);
@@ -128,19 +123,20 @@ export function ViewDetailButton({
 
   // 当Modal关闭时清空数据并更新状态
   useEffect(() => {
+    const updateStatus = async () => {
+      try {
+        if (type === "procurement") {
+          await updateProcurementStatusAction(orderID, 1); // 更新状态并刷新页面
+        } else {
+          await updateRebateStatusAction(orderID, 1); // 更新状态并刷新页面
+        }
+      } catch (statusError) {
+        console.error("Failed to update status:", statusError);
+      }
+    };
     // 关闭窗口时，如果已经查看过详情，则更新状态为已读并刷新页面
     if (!isOpen && hasViewed) {
-      startTransition(async () => {
-        try {
-          if (type === "procurement") {
-            await updateProcurementStatusAction(orderID, 1); // 更新状态并刷新页面
-          } else {
-            await updateRebateStatusAction(orderID, 1); // 更新状态并刷新页面
-          }
-        } catch (statusError) {
-          console.error("Failed to update status:", statusError);
-        }
-      });
+      updateStatus();
       setHasViewed(false); // 重置标记
     }
   }, [isOpen, hasViewed, orderID, type]);

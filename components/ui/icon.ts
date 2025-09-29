@@ -15,6 +15,7 @@ import {
   Download,
   ListOrdered,
   Eye,
+  CalendarIcon,
 } from "lucide-react";
 
 export const Icons = {
@@ -34,4 +35,5 @@ export const Icons = {
   Download,
   ListOrdered,
   Eye,
+  CalendarIcon,
 };

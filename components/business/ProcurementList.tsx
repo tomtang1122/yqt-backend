@@ -24,15 +24,21 @@ export async function ProcurementList({
   currentPage,
   query,
   status,
+  startTime,
+  endTime,
 }: {
   currentPage: number;
   query?: string;
   status?: number;
+  startTime?: number;
+  endTime?: number;
 }) {
   const { total = 0, procurementOrders = [] } = await fetchProcurement({
     pageNumber: currentPage,
     keyword: query,
     status,
+    startCreateTime: startTime,
+    endCreateTime: endTime,
   });
   const totalPage = Math.ceil(total / MAX_ITEMS_PER_PAGE);
 
@@ -43,6 +49,7 @@ export async function ProcurementList({
           <TableRow className="bg-gray-50">
             <TableHead className="w-[120px]">序号</TableHead>
             <TableHead>工单ID</TableHead>
+            <TableHead>创建日期</TableHead>
             <TableHead className="text-right">操作</TableHead>
           </TableRow>
         </TableHeader>
@@ -57,6 +64,9 @@ export async function ProcurementList({
                 })}
               >
                 {procurement.orderID}
+              </TableCell>
+              <TableCell>
+                {new Date(procurement.createTime).toLocaleString()}
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center gap-2 justify-end">
@@ -88,6 +98,8 @@ export async function ProcurementList({
               href={`/dashboard/finance/procurement?${buildQueryString({
                 query,
                 status,
+                startTime,
+                endTime,
                 page: currentPage - 1,
               })}`}
             />
@@ -103,6 +115,8 @@ export async function ProcurementList({
               href={`/dashboard/finance/procurement?${buildQueryString({
                 query,
                 status,
+                startTime,
+                endTime,
                 page: currentPage + 1,
               })}`}
             />
